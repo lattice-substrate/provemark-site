@@ -45,7 +45,7 @@
   }
 
   /* ================================================================
-     PREAMBLE — document header, not marketing hero
+     PREAMBLE
      ================================================================ */
   .preamble {
     max-width: var(--content-width);
@@ -121,7 +121,7 @@
   }
 
   /* ================================================================
-     SECTION HEADERS — specification-style
+     SECTION HEADERS
      ================================================================ */
   .section-id {
     display: flex;
@@ -153,6 +153,14 @@
     background: var(--rule-light);
   }
 
+  .section-note {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    color: var(--text-quiet);
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+
   /* ================================================================
      PROSE
      ================================================================ */
@@ -170,7 +178,7 @@
   }
 
   /* ================================================================
-     GOVERNED CONTAINMENT — bordered evidence/data blocks
+     GOVERNED CONTAINMENT
      ================================================================ */
   .contain {
     border: 1px solid var(--contain-border);
@@ -218,7 +226,7 @@
   }
 
   /* ================================================================
-     REGISTRY ITEMS — infrastructure entries
+     REGISTRY ITEMS
      ================================================================ */
   .registry-item {
     display: block;
@@ -263,7 +271,7 @@
   }
 
   /* ================================================================
-     LOG — article register, date-first
+     LOG
      ================================================================ */
   .log-entry {
     display: block;
@@ -366,23 +374,43 @@
     border-bottom-color: var(--text-tertiary);
   }
 
-  /* ================================================================
-     EVENT
-     ================================================================ */
-  .event-block {
+  .contact-categories {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
-    color: var(--text-secondary);
-    line-height: 1.85;
-  }
-
-  .event-name {
-    font-weight: 500;
-    color: var(--text-body);
+    font-size: 0.62rem;
+    color: var(--text-quiet);
+    margin-top: 0.75rem;
+    line-height: 1.8;
   }
 
   /* ================================================================
-     FOOTER — document colophon
+     EVENT (compact, footer-adjacent)
+     ================================================================ */
+  .event-compact {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--text-quiet);
+    line-height: 1.7;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule-light);
+  }
+
+  .event-compact .event-name {
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  /* ================================================================
+     TIER DIVIDER — visual weight break between section groups
+     ================================================================ */
+  .tier-break {
+    height: 1px;
+    background: var(--rule);
+    margin-top: 2.5rem;
+  }
+
+  /* ================================================================
+     FOOTER
      ================================================================ */
   footer {
     background: var(--bg-dark);
@@ -473,6 +501,10 @@
       <span class="preamble-value">IEEE 754 floating-point formatting, JSON canonicalization (RFC 8785), deterministic build verification.</span>
     </div>
     <div class="preamble-field">
+      <span class="preamble-label">Outcome</span>
+      <span class="preamble-value">Gate releases on governed evidence. Prove exact artifact behavior across explicit replay matrices. Eliminate ambiguity in high-assurance supply-chain workflows.</span>
+    </div>
+    <div class="preamble-field">
       <span class="preamble-label">Invariant</span>
       <span class="preamble-value invariant">Same inputs + same tool identity = byte-identical governed output.</span>
     </div>
@@ -483,8 +515,10 @@
 <main>
 
   <!-- ============================================================
-       01 — SCOPE
+       TIER 1 — THESIS + PROOF METHOD
        ============================================================ -->
+
+  <!-- 01 — SCOPE -->
   <section>
     <div class="section-id">
       <span class="section-num">01</span>
@@ -498,26 +532,82 @@
       of it.
     </p>
     <p>
-      The stack is designed for environments where ambiguity is a defect, leniency is a
-      liability, and rejection is the safe outcome. Every claim is narrow. Every output is
-      deterministic. Every release is gated on cryptographic evidence of cross-platform byte
-      stability.
+      The stack operates at the lowest layers of the software supply chain: IEEE 754
+      floating-point formatting, JSON canonicalization, and deterministic build verification.
+      These are the layers where one silent mismatch invalidates every assurance built
+      above them.
     </p>
     <p>
-      Unit tests provide confidence. Evidence bundles provide proof. We do not ship
-      on confidence alone.
+      The stack is designed for environments where ambiguity is a defect, leniency is a
+      liability, and rejection is the safe outcome. Unit tests provide confidence. Evidence
+      bundles provide proof. We do not ship on confidence alone.
     </p>
   </section>
 
-  <!-- ============================================================
-       02 — INFRASTRUCTURE
-       ============================================================ -->
+  <!-- 02 — CONFORMANCE EVIDENCE (promoted — core differentiator) -->
   <section>
     <div class="section-id">
       <span class="section-num">02</span>
+      <span class="section-name">Conformance Evidence</span>
+      <span class="section-rule"></span>
+    </div>
+    <div class="section-note">Evidence methodology — core differentiator</div>
+
+    <p>
+      Releases are gated on offline replay evidence — not test passage alone.
+      A replay harness executes canonical operations across distributions and
+      architectures, captures four independent SHA-256 digest streams, and
+      requires byte-identical output across the full matrix before any release
+      is permitted.
+    </p>
+
+    <div class="contain">
+      <div class="contain-register">
+        <div class="contain-row">
+          <span class="contain-label">Method</span>
+          <span class="contain-value">Offline replay · 12 nodes · 5 cold replays · 60 independent executions</span>
+        </div>
+        <div class="contain-row">
+          <span class="contain-label">Nodes</span>
+          <span class="contain-value">Debian · Ubuntu · Alpine · Fedora · Rocky · openSUSE — container + VM</span>
+        </div>
+        <div class="contain-row">
+          <span class="contain-label">Streams</span>
+          <span class="contain-value">Canonical digest · Verify digest · Failure class digest · Exit code digest</span>
+        </div>
+        <div class="contain-row">
+          <span class="contain-label">Binding</span>
+          <span class="contain-value">SHA-256 chain: evidence → bundle → vectors → source commit</span>
+        </div>
+        <div class="contain-row">
+          <span class="contain-label">Gate</span>
+          <span class="contain-value">Hard release gate · evidence-required · no default path</span>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      The evidence does not claim all possible builds are deterministic.
+      It claims this exact binary, built from this exact source commit,
+      produced identical output across an explicit replay matrix. The boundary
+      between engineering evidence and overclaiming is the boundary we govern.
+    </p>
+  </section>
+
+  <div class="tier-break"></div>
+
+  <!-- ============================================================
+       TIER 2 — CURRENT FOUNDATION
+       ============================================================ -->
+
+  <!-- 03 — INFRASTRUCTURE -->
+  <section>
+    <div class="section-id">
+      <span class="section-num">03</span>
       <span class="section-name">Infrastructure</span>
       <span class="section-rule"></span>
     </div>
+    <div class="section-note">Current baseline — available now</div>
 
     <a class="registry-item" href="https://github.com/lattice-substrate/json-canon">
       <div class="registry-name">json-canon</div>
@@ -553,15 +643,14 @@
     </a>
   </section>
 
-  <!-- ============================================================
-       03 — ENGINEERING
-       ============================================================ -->
+  <!-- 04 — ENGINEERING -->
   <section>
     <div class="section-id">
-      <span class="section-num">03</span>
+      <span class="section-num">04</span>
       <span class="section-name">Engineering</span>
       <span class="section-rule"></span>
     </div>
+    <div class="section-note">Implementation doctrine and methods</div>
 
     <a class="log-entry" href="https://lattice-substrate.github.io/blog/2026/02/27/shortest-roundtrip-ieee754-burger-dybvig/">
       <div class="log-head">
@@ -616,15 +705,20 @@
     </a>
   </section>
 
+  <div class="tier-break"></div>
+
   <!-- ============================================================
-       04 — RESEARCH
+       TIER 3 — SUPPORTING CREDIBILITY
        ============================================================ -->
+
+  <!-- 05 — RESEARCH -->
   <section>
     <div class="section-id">
-      <span class="section-num">04</span>
+      <span class="section-num">05</span>
       <span class="section-name">Research</span>
       <span class="section-rule"></span>
     </div>
+    <div class="section-note">Research basis for evidence-bearing release engineering</div>
 
     <div class="pub-title">
       Fixed-Width vs. Multiprecision Digit Generation for JSON Canonicalization:
@@ -656,81 +750,25 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- ============================================================
-       05 — CONFORMANCE EVIDENCE
-       ============================================================ -->
-  <section>
-    <div class="section-id">
-      <span class="section-num">05</span>
-      <span class="section-name">Conformance Evidence</span>
-      <span class="section-rule"></span>
-    </div>
 
     <p>
-      Releases are gated on offline replay evidence — not test passage alone.
-      A replay harness executes canonical operations across distributions and
-      architectures, captures four independent SHA-256 digest streams, and
-      requires byte-identical output across the full matrix before any release
-      is permitted.
-    </p>
-
-    <div class="contain">
-      <div class="contain-register">
-        <div class="contain-row">
-          <span class="contain-label">Method</span>
-          <span class="contain-value">Offline replay · 12 nodes · 5 cold replays · 60 independent executions</span>
-        </div>
-        <div class="contain-row">
-          <span class="contain-label">Nodes</span>
-          <span class="contain-value">Debian · Ubuntu · Alpine · Fedora · Rocky · openSUSE — container + VM</span>
-        </div>
-        <div class="contain-row">
-          <span class="contain-label">Streams</span>
-          <span class="contain-value">Canonical digest · Verify digest · Failure class digest · Exit code digest</span>
-        </div>
-        <div class="contain-row">
-          <span class="contain-label">Binding</span>
-          <span class="contain-value">SHA-256 chain: evidence → bundle → vectors → source commit</span>
-        </div>
-        <div class="contain-row">
-          <span class="contain-label">Gate</span>
-          <span class="contain-value">Hard release gate · evidence-required · no default path</span>
-        </div>
-      </div>
-    </div>
-
-    <p>
-      The evidence does not claim all possible builds are deterministic.
-      It claims this exact binary, built from this exact source commit,
-      produced identical output across an explicit replay matrix. The boundary
-      between engineering evidence and overclaiming is the boundary we govern.
+      This research underpins the company's approach to evidence-bearing release
+      engineering and deterministic primitive selection. Conformance failures
+      discovered in existing reference implementations informed the design of
+      json-canon's validation methodology and replay evidence gates.
     </p>
   </section>
 
+  <div class="tier-break"></div>
+
   <!-- ============================================================
-       06 — UPCOMING
+       TIER 4 — ENGAGEMENT
        ============================================================ -->
+
+  <!-- 06 — CONTACT -->
   <section>
     <div class="section-id">
       <span class="section-num">06</span>
-      <span class="section-name">Upcoming</span>
-      <span class="section-rule"></span>
-    </div>
-    <div class="event-block">
-      <span class="event-name">IIW 42</span> — Internet Identity Workshop<br>
-      April 28–30, 2026 · Mountain View, CA<br>
-      Presenting on JCS number formatting conformance
-    </div>
-  </section>
-
-  <!-- ============================================================
-       07 — CONTACT
-       ============================================================ -->
-  <section>
-    <div class="section-id">
-      <span class="section-num">07</span>
       <span class="section-name">Contact</span>
       <span class="section-rule"></span>
     </div>
@@ -739,6 +777,17 @@
     </div>
     <div class="contact-line" style="margin-top: 0.4rem;">
       Mark Lenhardt · Founder, Principal Engineer
+    </div>
+    <div class="contact-categories">
+      Open to inquiries on: infrastructure design, conformance consulting,<br>
+      evidence methodology, regulated evaluation pilots, technical partnerships.
+    </div>
+
+    <!-- Upcoming — reduced weight, event metadata -->
+    <div class="event-compact">
+      <span class="event-name">IIW 42</span> — Internet Identity Workshop ·
+      April 28–30, 2026 · Mountain View, CA<br>
+      Presenting on JCS number formatting conformance.
     </div>
   </section>
 
