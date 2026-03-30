@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Invariant Labs — Deterministic Verification Infrastructure</title>
+<title>Invariant Labs: Deterministic Verification Infrastructure</title>
 <meta name="description" content="Deterministic verification infrastructure for software supply chains. Conformance tooling, evidence systems, and foundational security primitives for release gating, supply chain assurance, and regulated artifact production.">
 <link rel="canonical" href="https://provemark.io">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,7 +34,7 @@
   body { background: var(--white); color: var(--ink); font-family: var(--serif); line-height: 1.7; }
 
   /* ================================================================
-     HERO BAND — dark, commanding, full-width
+     HERO BAND
      ================================================================ */
   .hero-band {
     background: var(--black);
@@ -58,15 +58,9 @@
     border-bottom: 1px solid rgba(255,255,255,0.1);
   }
 
-  .nav-brand {
-    color: rgba(255,255,255,0.5);
-    letter-spacing: 0.04em;
-  }
+  .nav-brand { color: rgba(255,255,255,0.5); letter-spacing: 0.04em; }
 
-  .nav-links {
-    display: flex;
-    gap: 1.75rem;
-  }
+  .nav-links { display: flex; gap: 1.75rem; }
 
   .nav-links a {
     color: rgba(255,255,255,0.45);
@@ -75,14 +69,18 @@
     transition: color 0.2s;
   }
 
-  .nav-links a:hover {
-    color: rgba(255,255,255,0.9);
-  }
+  .nav-links a:hover { color: rgba(255,255,255,0.9); }
 
   /* HERO CONTENT */
   .hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 3rem;
     padding: 4.5rem 0 4rem;
   }
+
+  .hero-text { flex: 1; min-width: 0; }
 
   .hero-name {
     font-family: var(--mono);
@@ -101,7 +99,6 @@
     color: rgba(255,255,255,0.88);
     line-height: 1.45;
     margin-bottom: 1.25rem;
-    max-width: 580px;
   }
 
   .hero-sub {
@@ -110,7 +107,6 @@
     font-weight: 300;
     color: rgba(255,255,255,0.5);
     line-height: 1.7;
-    max-width: 520px;
     margin-bottom: 2.5rem;
   }
 
@@ -127,13 +123,9 @@
     font-size: 0.72rem;
     font-weight: 500;
     color: rgba(255,255,255,0.7);
-    letter-spacing: 0.01em;
   }
 
-  .hero-email {
-    font-family: var(--mono);
-    font-size: 0.72rem;
-  }
+  .hero-email { font-family: var(--mono); font-size: 0.72rem; }
 
   .hero-email a {
     color: rgba(255,255,255,0.5);
@@ -147,8 +139,58 @@
     border-bottom-color: rgba(255,255,255,0.5);
   }
 
+  /* CONFORMANCE MATRIX VISUALIZATION */
+  .matrix-wrap {
+    flex-shrink: 0;
+    padding-top: 0.5rem;
+  }
+
+  .matrix {
+    display: grid;
+    grid-template-columns: repeat(12, 11px);
+    gap: 3px;
+    transition: opacity 0.3s;
+  }
+
+  .matrix i {
+    display: block;
+    width: 11px;
+    height: 11px;
+    background: rgba(255,255,255,0.08);
+    transition: background 0.3s;
+  }
+
+  .matrix:hover i {
+    background: rgba(255,255,255,0.16);
+  }
+
+  .matrix-label {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    color: rgba(255,255,255,0.25);
+    margin-top: 0.65rem;
+    letter-spacing: 0.04em;
+    line-height: 1.6;
+  }
+
+  /* Small matrix for footer */
+  .matrix--sm {
+    grid-template-columns: repeat(6, 6px);
+    gap: 2px;
+  }
+
+  .matrix--sm i {
+    width: 6px;
+    height: 6px;
+    background: rgba(255,255,255,0.07);
+  }
+
+  .matrix--sm:hover i {
+    background: rgba(255,255,255,0.12);
+  }
+
   /* ================================================================
-     HIGHLIGHTS BAND — key numbers
+     HIGHLIGHTS BAND
      ================================================================ */
   .highlights-band {
     background: var(--gray-50);
@@ -159,22 +201,29 @@
   .highlights {
     max-width: var(--content);
     margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .highlight-block {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    padding: 1.25rem 1rem;
+    text-align: center;
     font-family: var(--mono);
   }
 
   .highlight-num {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--ink);
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.25rem;
     letter-spacing: -0.02em;
   }
 
   .highlight-text {
-    font-size: 0.58rem;
+    font-size: 0.55rem;
     font-weight: 500;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -182,7 +231,7 @@
   }
 
   /* ================================================================
-     CONTENT BANDS — full-width sections
+     CONTENT BANDS
      ================================================================ */
   .band {
     padding: 3.5rem var(--gutter);
@@ -190,9 +239,7 @@
 
   .band--white { background: var(--white); }
   .band--gray { background: var(--gray-50); }
-
-  .band + .band--white { border-top: 1px solid var(--gray-100); }
-  .band--gray + .band { border-top: none; }
+  .band--white + .band--white { border-top: 1px solid var(--gray-100); }
 
   .band-inner {
     max-width: var(--content);
@@ -210,6 +257,33 @@
     text-transform: uppercase;
     color: var(--gray-500);
     margin-bottom: 1.5rem;
+  }
+
+  .section-count {
+    font-weight: 400;
+    color: var(--gray-400);
+    letter-spacing: 0.04em;
+    margin-left: 0.5rem;
+  }
+
+  /* ================================================================
+     BADGES: status indicators
+     ================================================================ */
+  .badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.55rem;
+    border: 1px solid var(--gray-300);
+    color: var(--gray-600);
+  }
+
+  .badge--strong {
+    border-color: var(--ink);
+    color: var(--ink);
   }
 
   /* ================================================================
@@ -231,16 +305,17 @@
   }
 
   /* ================================================================
-     EVIDENCE BLOCKS — structured data containers
+     EVIDENCE BLOCKS: governed data records
      ================================================================ */
   .evidence {
-    background: var(--white);
+    background: var(--gray-50);
     border: 1px solid var(--gray-200);
+    border-left: 3px solid var(--ink);
     margin: 1.75rem 0;
   }
 
-  .band--white .evidence {
-    background: var(--gray-50);
+  .band--gray .evidence {
+    background: var(--white);
   }
 
   .evidence-title {
@@ -252,14 +327,7 @@
     color: var(--gray-500);
     padding: 0.7rem 1.25rem;
     border-bottom: 1px solid var(--gray-200);
-  }
-
-  .band--white .evidence .evidence-title {
-    background: var(--gray-100);
-  }
-
-  .band--gray .evidence .evidence-title {
-    background: var(--gray-100);
+    background: rgba(0,0,0,0.02);
   }
 
   .evidence-body {
@@ -302,7 +370,7 @@
   }
 
   /* ================================================================
-     CARD GRID — infrastructure items as cards
+     GOVERNED ARTIFACT CARDS
      ================================================================ */
   .card-grid {
     display: grid;
@@ -310,54 +378,82 @@
     gap: 1rem;
   }
 
-  .card {
-    display: block;
+  .artifact-card {
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
     color: inherit;
     background: var(--white);
     border: 1px solid var(--gray-200);
-    padding: 1.5rem;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.2s;
   }
 
-  .card:hover {
+  .artifact-card:hover {
     border-color: var(--gray-400);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   }
 
-  .card:hover .card-name {
+  .artifact-card:hover .artifact-name {
     color: var(--ink);
   }
 
-  .card:last-child {
+  .artifact-card:last-child {
     grid-column: 1 / -1;
   }
 
-  .card-name {
+  .artifact-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 1.25rem;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .artifact-name {
     font-family: var(--mono);
     font-size: 0.82rem;
     font-weight: 600;
     color: var(--ink-soft);
-    margin-bottom: 0.2rem;
     transition: color 0.2s;
   }
 
-  .card-meta {
+  .artifact-body {
+    flex: 1;
+    padding: 1rem 1.25rem;
+  }
+
+  .artifact-meta {
     font-family: var(--mono);
     font-size: 0.58rem;
     color: var(--gray-400);
-    margin-bottom: 0.65rem;
+    margin-bottom: 0.5rem;
   }
 
-  .card-desc {
-    font-size: 0.88rem;
+  .artifact-desc {
+    font-size: 0.85rem;
     font-weight: 300;
     color: var(--gray-600);
     line-height: 1.6;
   }
 
+  .artifact-stats {
+    display: flex;
+    gap: 1.25rem;
+    padding: 0.7rem 1.25rem;
+    border-top: 1px solid var(--gray-100);
+    background: var(--gray-50);
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    color: var(--gray-500);
+    letter-spacing: 0.02em;
+  }
+
+  .artifact-stats strong {
+    font-weight: 600;
+    color: var(--ink-mid);
+  }
+
   /* ================================================================
-     LOG ENTRIES — engineering articles
+     LOG ENTRIES
      ================================================================ */
   .log-entry {
     display: block;
@@ -419,29 +515,33 @@
   /* ================================================================
      PUBLICATION
      ================================================================ */
+  .pub-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
   .pub-title {
     font-size: 1rem;
     font-weight: 400;
     color: var(--ink);
     line-height: 1.55;
-    margin-bottom: 0.2rem;
   }
 
-  .pub-status {
+  .pub-venue {
     font-family: var(--mono);
-    font-size: 0.6rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-size: 0.58rem;
     color: var(--gray-500);
-    margin-bottom: 1.25rem;
+    margin-top: 0.3rem;
   }
 
   /* ================================================================
      CONTACT CARD
      ================================================================ */
   .contact-card {
-    background: var(--white);
+    background: var(--gray-50);
     border: 1px solid var(--gray-200);
     padding: 1.75rem;
   }
@@ -482,23 +582,25 @@
      ================================================================ */
   .event-card {
     margin-top: 1.25rem;
-    background: var(--white);
+    background: var(--gray-50);
     border: 1px solid var(--gray-200);
     padding: 1.25rem 1.5rem;
     display: flex;
-    align-items: baseline;
-    gap: 1.75rem;
+    align-items: flex-start;
+    gap: 1.5rem;
     font-family: var(--mono);
   }
 
   .event-date-block {
     flex: 0 0 auto;
     text-align: center;
-    min-width: 5ch;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--gray-200);
+    background: var(--white);
   }
 
   .event-month {
-    font-size: 0.55rem;
+    font-size: 0.5rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -512,8 +614,18 @@
     line-height: 1.2;
   }
 
-  .event-body {
-    flex: 1;
+  .event-body { flex: 1; }
+
+  .event-badge {
+    display: inline-block;
+    font-size: 0.48rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--gray-300);
+    color: var(--gray-600);
+    margin-bottom: 0.5rem;
   }
 
   .event-name {
@@ -547,7 +659,7 @@
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
     font-family: var(--mono);
   }
 
@@ -568,9 +680,7 @@
     line-height: 1.7;
   }
 
-  .footer-right {
-    text-align: right;
-  }
+  .footer-right { text-align: right; }
 
   .footer-version {
     font-size: 0.55rem;
@@ -592,27 +702,32 @@
     .nav { flex-wrap: wrap; gap: 0.5rem; }
     .nav-links { gap: 1rem; }
 
-    .hero { padding: 3rem 0 2.5rem; }
+    .hero { flex-direction: column; padding: 3rem 0 2.5rem; }
     .hero-name { font-size: 1.6rem; letter-spacing: 0.06em; }
     .hero-lead { font-size: 1.1rem; }
     .hero-sub { font-size: 0.92rem; }
     .hero-foot { flex-direction: column; gap: 0.6rem; }
+    .matrix-wrap { display: none; }
 
-    .highlights { flex-wrap: wrap; gap: 1.25rem; }
-    .highlight { flex: 0 0 40%; }
+    .highlights { grid-template-columns: repeat(2, 1fr); }
 
     .band { padding: 2.5rem var(--gutter); }
 
     .card-grid { grid-template-columns: 1fr; }
-    .card:last-child { grid-column: auto; }
+    .artifact-card:last-child { grid-column: auto; }
+    .artifact-stats { flex-wrap: wrap; gap: 0.5rem 1rem; }
 
     .evidence-row { flex-direction: column; gap: 0.05rem; }
 
-    .event-card { flex-direction: column; gap: 0.75rem; }
-    .event-date-block { text-align: left; }
+    .pub-head { flex-direction: column; gap: 0.5rem; }
 
-    .footer-inner { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .event-card { flex-direction: column; gap: 0.75rem; }
+    .event-date-block { text-align: left; display: flex; align-items: baseline; gap: 0.5rem; padding: 0.4rem 0.6rem; }
+    .event-day { font-size: 1rem; }
+
+    .footer-inner { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
     .footer-right { text-align: left; }
+    .footer-mark { display: none; }
 
     .log-head { flex-wrap: wrap; }
     .log-series { padding-left: 0; }
@@ -636,20 +751,32 @@
       </div>
     </nav>
     <div class="hero">
-      <h1 class="hero-name">Invariant Labs</h1>
-      <div class="hero-lead">
-        Deterministic verification infrastructure
-        for software supply chains.
+      <div class="hero-text">
+        <h1 class="hero-name">Invariant Labs</h1>
+        <div class="hero-lead">
+          Deterministic verification infrastructure
+          for software supply chains.
+        </div>
+        <div class="hero-sub">
+          Conformance tooling, evidence systems, and foundational security
+          primitives for release gating, supply chain assurance, and
+          regulated artifact production.
+        </div>
       </div>
-      <div class="hero-sub">
-        Conformance tooling, evidence systems, and foundational security
-        primitives — for release gating, supply chain assurance, and
-        regulated artifact production.
+      <div class="matrix-wrap">
+        <div class="matrix" aria-hidden="true">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <div class="matrix-label">12 nodes × 5 replays<br>60 independent executions</div>
       </div>
-      <div class="hero-foot">
-        <div class="hero-invariant">Same inputs + same tool identity = byte-identical governed output.</div>
-        <div class="hero-email"><a href="mailto:mark@provemark.io">mark@provemark.io</a></div>
-      </div>
+    </div>
+    <div class="hero-foot">
+      <div class="hero-invariant">Same inputs + same tool identity = byte-identical governed output.</div>
+      <div class="hero-email"><a href="mailto:mark@provemark.io">mark@provemark.io</a></div>
     </div>
   </div>
 </div>
@@ -659,19 +786,19 @@
      ============================================================ -->
 <div class="highlights-band">
   <div class="highlights">
-    <div class="highlight">
+    <div class="highlight-block">
       <div class="highlight-num">286,362</div>
       <div class="highlight-text">Oracle test vectors</div>
     </div>
-    <div class="highlight">
+    <div class="highlight-block">
       <div class="highlight-num">12</div>
       <div class="highlight-text">Replay nodes</div>
     </div>
-    <div class="highlight">
+    <div class="highlight-block">
       <div class="highlight-num">60</div>
       <div class="highlight-text">Executions per release</div>
     </div>
-    <div class="highlight">
+    <div class="highlight-block">
       <div class="highlight-num">0</div>
       <div class="highlight-text">Dependencies</div>
     </div>
@@ -687,7 +814,7 @@
     <p class="prose">
       Invariant Labs builds infrastructure where <strong>correctness is the product</strong>.
       We develop deterministic data processing libraries, standards-grade conformance tooling,
-      and engineering practices that produce governed evidence of correctness — not assertions
+      and engineering practices that produce governed evidence of correctness, not assertions
       of it.
     </p>
     <p class="prose">
@@ -719,13 +846,13 @@
     </p>
     <p class="prose">
       These are not hypothetical failures. They are the class of defect that propagates
-      upward through every signature, hash, and attestation built on top of them — and
-      they are invisible to conventional testing.
+      upward through every signature, hash, and attestation built on top of them.
+      They are invisible to conventional testing.
     </p>
     <p class="prose">
       Invariant Labs exists to close that gap: <strong>deterministic primitives with governed
       evidence that they behave identically across explicit matrices</strong>. Not assertions
-      of correctness. Proof of it — scoped, bounded, and independently verifiable.
+      of correctness. Proof of it. Scoped, bounded, independently verifiable.
     </p>
   </div>
 </div>
@@ -737,7 +864,7 @@
   <div class="band-inner">
     <div class="section-label">Conformance Evidence</div>
     <p class="prose">
-      Releases are gated on offline replay evidence — not test passage alone.
+      Releases are gated on offline replay evidence, not test passage alone.
       A replay harness executes canonical operations across distributions and
       architectures, captures four independent SHA-256 digest streams, and
       requires byte-identical output across the full matrix before any release
@@ -745,7 +872,7 @@
     </p>
 
     <div class="evidence">
-      <div class="evidence-title">Replay matrix</div>
+      <div class="evidence-title">Replay matrix specification</div>
       <div class="evidence-body">
         <div class="evidence-row">
           <span class="evidence-label">Method</span>
@@ -753,7 +880,7 @@
         </div>
         <div class="evidence-row">
           <span class="evidence-label">Nodes</span>
-          <span class="evidence-value">Debian · Ubuntu · Alpine · Fedora · Rocky · openSUSE — container + VM</span>
+          <span class="evidence-value">Debian · Ubuntu · Alpine · Fedora · Rocky · openSUSE (container + VM)</span>
         </div>
         <div class="evidence-row">
           <span class="evidence-label">Streams</span>
@@ -784,39 +911,66 @@
      ============================================================ -->
 <div class="band band--gray" id="infrastructure">
   <div class="band-inner">
-    <div class="section-label">Infrastructure — Available Now</div>
+    <div class="section-label">Infrastructure: Available Now</div>
 
     <div class="card-grid">
-      <a class="card" href="https://github.com/lattice-substrate/json-canon">
-        <div class="card-name">json-canon</div>
-        <div class="card-meta">Go · Apache 2.0</div>
-        <div class="card-desc">
-          Deterministic RFC 8785 JSON Canonicalization Scheme. Strict RFC 8259 parser
-          rejecting lone surrogates, duplicate keys, and noncharacters. ECMA-262
-          number formatting with even-digit tie-breaking. UTF-16 code-unit key sorting.
-          Thirteen-class failure taxonomy with stable exit codes. Seven independent resource
-          bounds. Zero dependencies. 286,362 cross-engine oracle test vectors.
+      <a class="artifact-card" href="https://github.com/lattice-substrate/json-canon">
+        <div class="artifact-head">
+          <span class="artifact-name">json-canon</span>
+          <span class="badge badge--strong">Released</span>
+        </div>
+        <div class="artifact-body">
+          <div class="artifact-meta">Go · Apache 2.0 · github.com/lattice-substrate/json-canon</div>
+          <div class="artifact-desc">
+            Deterministic RFC 8785 JSON Canonicalization Scheme. Strict RFC 8259 parser
+            rejecting lone surrogates, duplicate keys, and noncharacters. ECMA-262
+            number formatting with even-digit tie-breaking. UTF-16 code-unit key sorting.
+          </div>
+        </div>
+        <div class="artifact-stats">
+          <span><strong>286,362</strong> vectors</span>
+          <span><strong>13</strong> failure classes</span>
+          <span><strong>7</strong> resource bounds</span>
+          <span><strong>0</strong> deps</span>
         </div>
       </a>
 
-      <a class="card" href="https://github.com/lattice-substrate/jcs-schubfach">
-        <div class="card-name">jcs-schubfach</div>
-        <div class="card-meta">Go · Apache 2.0</div>
-        <div class="card-desc">
-          Fixed-width Schubfach digit generation for RFC 8785 number formatting.
-          Same ECMA-262 conformance contract, same output bytes, no multiprecision
-          arithmetic. 31.3% geometric mean throughput improvement over Burger-Dybvig
-          with zero conformance regressions.
+      <a class="artifact-card" href="https://github.com/lattice-substrate/jcs-schubfach">
+        <div class="artifact-head">
+          <span class="artifact-name">jcs-schubfach</span>
+          <span class="badge badge--strong">Released</span>
+        </div>
+        <div class="artifact-body">
+          <div class="artifact-meta">Go · Apache 2.0 · github.com/lattice-substrate/jcs-schubfach</div>
+          <div class="artifact-desc">
+            Fixed-width Schubfach digit generation for RFC 8785 number formatting.
+            Same ECMA-262 conformance contract, same output bytes, no multiprecision
+            arithmetic.
+          </div>
+        </div>
+        <div class="artifact-stats">
+          <span><strong>31.3%</strong> faster</span>
+          <span><strong>0</strong> conformance regressions</span>
         </div>
       </a>
 
-      <a class="card" href="https://github.com/lattice-substrate">
-        <div class="card-name">Lattice Substrate</div>
-        <div class="card-meta">GitHub · 11 repositories</div>
-        <div class="card-desc">
-          Organization home for deterministic infrastructure primitives.
-          Four digit-generation algorithms across two languages (Go, Rust),
-          benchmark laboratory, conformance harness, and research artifacts.
+      <a class="artifact-card" href="https://github.com/lattice-substrate">
+        <div class="artifact-head">
+          <span class="artifact-name">Lattice Substrate</span>
+          <span class="badge">Organization</span>
+        </div>
+        <div class="artifact-body">
+          <div class="artifact-meta">GitHub · github.com/lattice-substrate</div>
+          <div class="artifact-desc">
+            Organization home for deterministic infrastructure primitives.
+            Four digit-generation algorithms across two languages (Go, Rust),
+            benchmark laboratory, conformance harness, and research artifacts.
+          </div>
+        </div>
+        <div class="artifact-stats">
+          <span><strong>11</strong> repositories</span>
+          <span><strong>4</strong> algorithms</span>
+          <span><strong>2</strong> languages</span>
         </div>
       </a>
     </div>
@@ -828,7 +982,7 @@
      ============================================================ -->
 <div class="band band--white">
   <div class="band-inner">
-    <div class="section-label">Engineering</div>
+    <div class="section-label">Engineering<span class="section-count">6 articles</span></div>
 
     <a class="log-entry" href="https://lattice-substrate.github.io/blog/2026/02/27/shortest-roundtrip-ieee754-burger-dybvig/">
       <div class="log-head">
@@ -891,11 +1045,16 @@
   <div class="band-inner">
     <div class="section-label">Research</div>
 
-    <div class="pub-title">
-      Fixed-Width vs. Multiprecision Digit Generation for JSON Canonicalization:
-      A Four-Algorithm Empirical Study
+    <div class="pub-head">
+      <div>
+        <div class="pub-title">
+          Fixed-Width vs. Multiprecision Digit Generation for JSON Canonicalization:
+          A Four-Algorithm Empirical Study
+        </div>
+        <div class="pub-venue">Software: Practice and Experience (Wiley)</div>
+      </div>
+      <span class="badge">Under review</span>
     </div>
-    <div class="pub-status">Under peer review — Software: Practice and Experience (Wiley)</div>
 
     <div class="evidence">
       <div class="evidence-title">Study parameters</div>
@@ -958,8 +1117,9 @@
         <div class="event-day">28</div>
       </div>
       <div class="event-body">
-        <div class="event-name">IIW 42 — Internet Identity Workshop</div>
-        <div class="event-details">April 28–30, 2026 · Mountain View, CA</div>
+        <div class="event-badge">Upcoming</div>
+        <div class="event-name">IIW 42, Internet Identity Workshop</div>
+        <div class="event-details">April 28-30, 2026 · Mountain View, CA</div>
         <div class="event-topic">Presenting on JCS number formatting conformance.</div>
       </div>
     </div>
@@ -974,6 +1134,13 @@
     <div>
       <div class="footer-entity">Invariant Labs</div>
       <div class="footer-legal">Limited Liability Company<br>Plymouth, Minnesota</div>
+    </div>
+    <div class="footer-mark">
+      <div class="matrix matrix--sm" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i>
+        <i></i><i></i><i></i><i></i><i></i><i></i>
+        <i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
     </div>
     <div class="footer-right">
       <div class="footer-version">2026</div>
