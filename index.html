@@ -7,307 +7,330 @@
 <meta name="description" content="Deterministic verification infrastructure for software supply chains. Conformance tooling, regulatory evidence systems, and foundational security primitives. Same inputs, same tool identity, byte-identical governed output.">
 <link rel="canonical" href="https://provemark.io">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap');
 
   :root {
-    --bg: #F4F4F4;
-    --bg-dark: #111111;
-    --text-primary: #111111;
-    --text-body: #333333;
-    --text-secondary: #555555;
-    --text-tertiary: #888888;
-    --text-quiet: #999999;
-    --rule: #CCCCCC;
-    --rule-light: #DDDDDD;
-    --rule-strong: #999999;
-    --contain-bg: #FAFAFA;
-    --contain-border: #BBBBBB;
-    --font-serif: 'Source Serif 4', Georgia, serif;
-    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
-    --content-width: 660px;
-    --gutter: 2rem;
-    --label-width: 11ch;
+    --bg: #FAFAF8;
+    --surface: #FFFFFF;
+    --surface-inset: #F5F5F3;
+    --ink: #1A1A1A;
+    --ink-body: #2A2A2A;
+    --ink-secondary: #4A4A4A;
+    --ink-dim: #777777;
+    --ink-ghost: #999999;
+    --border-heavy: #1A1A1A;
+    --border-mid: #AAAAAA;
+    --border-light: #D0D0CE;
+    --border-ghost: #E0E0DD;
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
+    --page-width: 680px;
+    --margin: 2rem;
+    --field-label: 12ch;
+    --cell-gap: 1px;
   }
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   html {
-    font-size: 16px;
+    font-size: 15px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   body {
     background: var(--bg);
-    color: var(--text-primary);
-    font-family: var(--font-serif);
-    line-height: 1.6;
+    color: var(--ink);
+    font-family: var(--mono);
+    line-height: 1.65;
   }
 
   /* ================================================================
-     DOCUMENT CLASSIFICATION — governed artifact header
+     PAGE FRAME — the entire document is a governed artifact
      ================================================================ */
-  .doc-class {
-    max-width: var(--content-width);
+  .page {
+    max-width: var(--page-width);
     margin: 0 auto;
-    padding: 1.25rem var(--gutter) 0;
-    font-family: var(--font-mono);
-    font-size: 0.52rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--text-quiet);
+    padding: 0 var(--margin);
+  }
+
+  /* ================================================================
+     DOCUMENT HEADER — classification metadata
+     ================================================================ */
+  .doc-header {
+    padding: 1.5rem 0 0;
     display: flex;
     justify-content: space-between;
-  }
-
-  /* ================================================================
-     PREAMBLE
-     ================================================================ */
-  .preamble {
-    max-width: var(--content-width);
-    margin: 0 auto;
-    padding: 1rem var(--gutter) 0;
-  }
-
-  .preamble-entity {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--text-primary);
-    margin-bottom: 1.5rem;
-  }
-
-  .preamble-rule {
-    height: 1px;
-    background: var(--text-primary);
-    margin-bottom: 1.5rem;
-  }
-
-  .preamble-fields {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    line-height: 1.85;
-    color: var(--text-body);
-  }
-
-  .preamble-field {
-    display: flex;
     align-items: baseline;
-    margin-bottom: 0.6rem;
-  }
-
-  .preamble-label {
-    flex: 0 0 var(--label-width);
     font-size: 0.6rem;
-    font-weight: 500;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--text-tertiary);
+    color: var(--ink-ghost);
+    border-bottom: 2px solid var(--border-heavy);
+    padding-bottom: 0.75rem;
   }
 
-  .preamble-value {
-    flex: 1;
-    color: var(--text-body);
-  }
-
-  .preamble-value.invariant {
-    color: var(--text-primary);
-    font-weight: 500;
-  }
-
-  .preamble-close {
-    height: 1px;
-    background: var(--rule);
-    margin-top: 1.25rem;
+  .doc-header-right {
+    text-align: right;
   }
 
   /* ================================================================
-     MAIN
+     ENTITY BLOCK
      ================================================================ */
-  main {
-    max-width: var(--content-width);
-    margin: 0 auto;
-    padding: 0 var(--gutter);
+  .entity {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--border-mid);
   }
 
-  section {
-    margin-top: 2.25rem;
-  }
-
-  /* ================================================================
-     SECTION HEADERS
-     ================================================================ */
-  .section-id {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-  }
-
-  .section-num {
-    font-family: var(--font-mono);
-    font-size: 0.58rem;
-    font-weight: 500;
-    color: var(--text-tertiary);
-    letter-spacing: 0.05em;
-  }
-
-  .section-name {
-    font-family: var(--font-mono);
-    font-size: 0.58rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-tertiary);
-  }
-
-  .section-rule {
-    flex: 1;
-    height: 1px;
-    background: var(--rule-light);
-  }
-
-  .section-note {
-    font-family: var(--font-mono);
-    font-size: 0.55rem;
-    color: var(--text-quiet);
-    letter-spacing: 0.05em;
-    margin-bottom: 1rem;
-  }
-
-  /* ================================================================
-     PROSE
-     ================================================================ */
-  p {
-    font-size: 0.88rem;
-    font-weight: 300;
-    color: var(--text-body);
-    line-height: 1.75;
-    margin-bottom: 0.75rem;
-  }
-
-  p strong {
+  .entity-name {
+    font-size: 0.85rem;
     font-weight: 600;
-    color: var(--text-primary);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink);
   }
 
   /* ================================================================
-     GOVERNED CONTAINMENT
+     FIELD REGISTER — key-value metadata, the site's core visual unit
      ================================================================ */
-  .contain {
-    border: 1px solid var(--contain-border);
-    background: var(--contain-bg);
-    padding: 1rem 1.25rem;
-    margin: 1.25rem 0;
+  .register {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-light);
   }
 
-  .contain-register {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    line-height: 2;
-    color: var(--text-secondary);
-  }
-
-  .contain-row {
+  .register-row {
     display: flex;
     align-items: baseline;
+    padding: 0.3rem 0;
   }
 
-  .contain-label {
-    flex: 0 0 var(--label-width);
-    font-size: 0.58rem;
+  .register-label {
+    flex: 0 0 var(--field-label);
+    font-size: 0.6rem;
     font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--text-tertiary);
+    color: var(--ink-dim);
   }
 
-  .contain-value {
+  .register-value {
     flex: 1;
-    color: var(--text-secondary);
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: var(--ink-body);
+    line-height: 1.7;
   }
 
-  .contain-value a {
-    color: var(--text-secondary);
-    text-decoration: none;
-    border-bottom: 1px solid var(--rule);
-    transition: color 0.15s ease, border-color 0.15s ease;
-  }
-
-  .contain-value a:hover {
-    color: var(--text-primary);
-    border-bottom-color: var(--text-tertiary);
-  }
-
-  /* ================================================================
-     REGISTRY ITEMS
-     ================================================================ */
-  .registry-item {
-    display: block;
-    padding: 0.85rem 0 0.85rem 0.85rem;
-    border-left: 2px solid var(--rule);
-    margin-bottom: 0.75rem;
-    text-decoration: none;
-    color: inherit;
-    transition: border-color 0.15s ease;
-  }
-
-  .registry-item:hover {
-    border-left-color: var(--text-primary);
-  }
-
-  .registry-item:hover .registry-name {
-    color: var(--text-primary);
-  }
-
-  .registry-name {
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
+  .register-value.declared {
     font-weight: 500;
-    color: var(--text-body);
-    margin-bottom: 0.15rem;
-    transition: color 0.15s ease;
-  }
-
-  .registry-meta {
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: var(--text-quiet);
-    letter-spacing: 0.02em;
-    margin-bottom: 0.3rem;
-  }
-
-  .registry-desc {
-    font-size: 0.8rem;
-    font-weight: 300;
-    color: var(--text-secondary);
-    line-height: 1.6;
+    color: var(--ink);
   }
 
   /* ================================================================
-     LOG
+     SECTION — governed content blocks
      ================================================================ */
-  .log-entry {
+  .section {
+    margin-top: 2rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 1rem;
+  }
+
+  .section-index {
+    font-size: 0.6rem;
+    font-weight: 500;
+    color: var(--ink-dim);
+    letter-spacing: 0.05em;
+  }
+
+  .section-title {
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+
+  .section-status {
+    margin-left: auto;
+    font-size: 0.52rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-ghost);
+  }
+
+  .section-desc {
+    font-size: 0.55rem;
+    font-weight: 400;
+    color: var(--ink-ghost);
+    letter-spacing: 0.04em;
+    margin-bottom: 1rem;
+  }
+
+  /* ================================================================
+     PROSE — body text within sections
+     ================================================================ */
+  .prose {
+    font-size: 0.78rem;
+    font-weight: 300;
+    color: var(--ink-body);
+    line-height: 1.85;
+    margin-bottom: 0.65rem;
+  }
+
+  .prose strong {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* ================================================================
+     EVIDENCE BLOCK — contained, bordered, inset
+     governed data that stands apart from prose
+     ================================================================ */
+  .evidence {
+    background: var(--surface);
+    border: 1px solid var(--border-mid);
+    margin: 1.25rem 0;
+  }
+
+  .evidence-header {
+    font-size: 0.52rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    padding: 0.6rem 1rem;
+    background: var(--surface-inset);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .evidence-body {
+    padding: 0.75rem 1rem;
+  }
+
+  .evidence-row {
+    display: flex;
+    align-items: baseline;
+    padding: 0.25rem 0;
+    font-size: 0.65rem;
+    line-height: 1.8;
+  }
+
+  .evidence-label {
+    flex: 0 0 var(--field-label);
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+
+  .evidence-value {
+    flex: 1;
+    color: var(--ink-secondary);
+  }
+
+  .evidence-value a {
+    color: var(--ink-secondary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border-light);
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .evidence-value a:hover {
+    color: var(--ink);
+    border-bottom-color: var(--ink-dim);
+  }
+
+  /* ================================================================
+     TIER BOUNDARY — structural grouping with declared purpose
+     ================================================================ */
+  .tier {
+    margin-top: 2.5rem;
+    padding-top: 0.6rem;
+    border-top: 2px solid var(--border-heavy);
+  }
+
+  .tier-label {
+    font-size: 0.52rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-bottom: 0;
+  }
+
+  /* ================================================================
+     ARTIFACT ENTRIES — clickable infrastructure items
+     ================================================================ */
+  .artifact {
     display: block;
     text-decoration: none;
     color: inherit;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--rule-light);
-    transition: border-color 0.15s ease;
+    padding: 0.75rem 0 0.75rem 0.85rem;
+    border-left: 2px solid var(--border-light);
+    margin-bottom: 0.5rem;
+    transition: border-color 0.15s;
   }
 
-  .log-entry:first-of-type {
-    border-top: 1px solid var(--rule-light);
+  .artifact:hover {
+    border-left-color: var(--ink);
   }
 
-  .log-entry:hover {
-    border-bottom-color: var(--rule-strong);
+  .artifact:hover .artifact-name {
+    color: var(--ink);
   }
 
-  .log-entry:hover .log-title {
-    color: var(--text-primary);
+  .artifact-name {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--ink-body);
+    transition: color 0.15s;
+    margin-bottom: 0.1rem;
+  }
+
+  .artifact-meta {
+    font-size: 0.58rem;
+    color: var(--ink-ghost);
+    letter-spacing: 0.02em;
+    margin-bottom: 0.25rem;
+  }
+
+  .artifact-desc {
+    font-size: 0.72rem;
+    font-weight: 300;
+    color: var(--ink-secondary);
+    line-height: 1.65;
+  }
+
+  /* ================================================================
+     LOG ENTRIES — engineering writing
+     ================================================================ */
+  .log {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid var(--border-ghost);
+    transition: border-color 0.15s;
+  }
+
+  .log:first-of-type {
+    border-top: 1px solid var(--border-ghost);
+  }
+
+  .log:hover {
+    border-bottom-color: var(--border-mid);
+  }
+
+  .log:hover .log-title {
+    color: var(--ink);
   }
 
   .log-head {
@@ -317,33 +340,30 @@
   }
 
   .log-date {
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: var(--text-quiet);
+    font-size: 0.58rem;
+    color: var(--ink-ghost);
     flex: 0 0 auto;
     letter-spacing: 0.02em;
   }
 
   .log-dur {
-    font-family: var(--font-mono);
-    font-size: 0.55rem;
-    color: var(--text-quiet);
+    font-size: 0.52rem;
+    color: var(--ink-ghost);
     flex: 0 0 auto;
   }
 
   .log-title {
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     font-weight: 400;
-    color: var(--text-secondary);
-    line-height: 1.45;
-    transition: color 0.15s ease;
+    color: var(--ink-secondary);
+    line-height: 1.5;
+    transition: color 0.15s;
   }
 
   .log-series {
-    font-family: var(--font-mono);
-    font-size: 0.55rem;
-    color: var(--text-quiet);
-    margin-left: calc(var(--label-width) - 0.5rem);
+    font-size: 0.52rem;
+    color: var(--ink-ghost);
+    margin-left: calc(var(--field-label) - 1.5rem);
     margin-top: 0.1rem;
   }
 
@@ -351,148 +371,108 @@
      PUBLICATION
      ================================================================ */
   .pub-title {
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     font-weight: 400;
-    color: var(--text-primary);
-    line-height: 1.55;
-    margin-bottom: 0.2rem;
+    color: var(--ink);
+    line-height: 1.6;
+    margin-bottom: 0.15rem;
   }
 
   .pub-status {
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
+    font-size: 0.55rem;
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--text-tertiary);
+    color: var(--ink-dim);
     margin-bottom: 1rem;
   }
 
   /* ================================================================
-     CONTACT
+     CONTACT REGISTER
      ================================================================ */
-  .contact-line {
-    font-family: var(--font-mono);
+  .contact-row {
     font-size: 0.72rem;
-    color: var(--text-secondary);
-    margin-bottom: 0.25rem;
+    color: var(--ink-secondary);
+    margin-bottom: 0.2rem;
   }
 
-  .contact-line a {
-    color: var(--text-body);
+  .contact-row a {
+    color: var(--ink-body);
     text-decoration: none;
-    border-bottom: 1px solid var(--rule);
-    transition: color 0.15s ease, border-color 0.15s ease;
+    border-bottom: 1px solid var(--border-light);
+    transition: color 0.15s, border-color 0.15s;
   }
 
-  .contact-line a:hover {
-    color: var(--text-primary);
-    border-bottom-color: var(--text-tertiary);
+  .contact-row a:hover {
+    color: var(--ink);
+    border-bottom-color: var(--ink-dim);
   }
 
   .contact-categories {
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    color: var(--text-quiet);
+    font-size: 0.6rem;
+    color: var(--ink-ghost);
     margin-top: 0.75rem;
     line-height: 1.8;
   }
 
-  /* ================================================================
-     EVENT (compact, footer-adjacent)
-     ================================================================ */
-  .event-compact {
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    color: var(--text-quiet);
+  .contact-event {
+    font-size: 0.58rem;
+    color: var(--ink-ghost);
     line-height: 1.7;
-    margin-top: 1.5rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--rule-light);
+    margin-top: 1.25rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-ghost);
   }
 
-  .event-compact .event-name {
-    color: var(--text-secondary);
+  .contact-event strong {
     font-weight: 500;
+    color: var(--ink-secondary);
   }
 
   /* ================================================================
-     TIER LABELS — semantic structural hierarchy
+     COLOPHON — terminal boundary
      ================================================================ */
-  .tier-label {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-top: 2.5rem;
-    font-family: var(--font-mono);
-    font-size: 0.5rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--rule-strong);
-  }
-
-  .tier-label::before,
-  .tier-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--rule);
-  }
-
-  /* ================================================================
-     FOOTER
-     ================================================================ */
-  footer {
-    background: var(--bg-dark);
-    margin-top: 3rem;
-    padding: 2rem var(--gutter);
-  }
-
   .colophon {
-    max-width: var(--content-width);
-    margin: 0 auto;
+    margin-top: 3rem;
+    border-top: 2px solid var(--border-heavy);
+    padding: 1.25rem 0 3rem;
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-  }
-
-  .colophon-left {
-    font-family: var(--font-mono);
+    align-items: flex-start;
   }
 
   .colophon-entity {
-    font-size: 0.68rem;
+    font-size: 0.62rem;
     font-weight: 600;
-    color: #CCCCCC;
     letter-spacing: 0.18em;
     text-transform: uppercase;
+    color: var(--ink);
   }
 
   .colophon-legal {
-    font-size: 0.55rem;
+    font-size: 0.52rem;
     font-weight: 400;
-    color: #444444;
-    letter-spacing: 0.08em;
+    color: var(--ink-ghost);
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    margin-top: 0.35rem;
+    margin-top: 0.3rem;
     line-height: 1.6;
   }
 
   .colophon-right {
-    font-family: var(--font-mono);
     text-align: right;
   }
 
   .colophon-version {
-    font-size: 0.55rem;
-    color: #444444;
+    font-size: 0.52rem;
+    color: var(--ink-ghost);
     letter-spacing: 0.05em;
   }
 
   .colophon-domain {
-    font-size: 0.6rem;
-    color: #666666;
-    margin-top: 0.25rem;
+    font-size: 0.58rem;
+    color: var(--ink-dim);
+    margin-top: 0.2rem;
   }
 
   /* ================================================================
@@ -500,131 +480,133 @@
      ================================================================ */
   @media (max-width: 600px) {
     :root {
-      --gutter: 1.25rem;
-      --label-width: 9ch;
+      --margin: 1.25rem;
+      --field-label: 10ch;
     }
-    .doc-class { padding-top: 0.75rem; }
-    .preamble { padding-top: 0.75rem; }
-    .preamble-field { flex-direction: column; gap: 0.1rem; margin-bottom: 0.5rem; }
-    .contain-row { flex-direction: column; gap: 0.1rem; }
-    .colophon { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .doc-header { flex-direction: column; gap: 0.2rem; }
+    .doc-header-right { text-align: left; }
+    .register-row { flex-direction: column; gap: 0.05rem; padding: 0.2rem 0; }
+    .evidence-row { flex-direction: column; gap: 0.05rem; }
+    .colophon { flex-direction: column; gap: 0.75rem; }
     .colophon-right { text-align: left; }
     .log-head { flex-wrap: wrap; }
     .log-series { margin-left: 0; }
+    .section-status { display: none; }
   }
 </style>
 </head>
 <body>
 
-<!-- ============================================================
-     DOCUMENT CLASSIFICATION
-     ============================================================ -->
-<div class="doc-class">
-  <span>Site document · Revision 2 · 2026-03</span>
-  <span>provemark.io</span>
-</div>
+<div class="page">
 
-<!-- ============================================================
-     PREAMBLE
-     ============================================================ -->
-<header class="preamble">
-  <div class="preamble-entity">Invariant Labs</div>
-  <div class="preamble-rule"></div>
-  <div class="preamble-fields">
-    <div class="preamble-field">
-      <span class="preamble-label">Scope</span>
-      <span class="preamble-value">Deterministic verification infrastructure for software supply chains.</span>
+  <!-- ============================================================
+       DOCUMENT HEADER
+       ============================================================ -->
+  <div class="doc-header">
+    <span>Site document · Revision 2 · 2026-03</span>
+    <span class="doc-header-right">provemark.io</span>
+  </div>
+
+  <!-- ============================================================
+       ENTITY
+       ============================================================ -->
+  <div class="entity">
+    <div class="entity-name">Invariant Labs</div>
+  </div>
+
+  <!-- ============================================================
+       FIELD REGISTER — the preamble as governed metadata
+       ============================================================ -->
+  <div class="register">
+    <div class="register-row">
+      <span class="register-label">Scope</span>
+      <span class="register-value">Deterministic verification infrastructure for software supply chains.</span>
     </div>
-    <div class="preamble-field">
-      <span class="preamble-label">Domain</span>
-      <span class="preamble-value">IEEE 754 floating-point formatting, JSON canonicalization (RFC 8785), deterministic build verification.</span>
+    <div class="register-row">
+      <span class="register-label">Domain</span>
+      <span class="register-value">IEEE 754 floating-point formatting, JSON canonicalization (RFC 8785), deterministic build verification.</span>
     </div>
-    <div class="preamble-field">
-      <span class="preamble-label">For</span>
-      <span class="preamble-value">Release gating · Supply chain assurance · Regulated artifact production · Critical infrastructure qualification.</span>
+    <div class="register-row">
+      <span class="register-label">For</span>
+      <span class="register-value">Release gating · Supply chain assurance · Regulated artifact production · Critical infrastructure qualification.</span>
     </div>
-    <div class="preamble-field">
-      <span class="preamble-label">Outcome</span>
-      <span class="preamble-value">Gate releases on governed evidence. Prove exact artifact behavior across explicit replay matrices. Eliminate ambiguity in high-assurance supply-chain workflows.</span>
+    <div class="register-row">
+      <span class="register-label">Outcome</span>
+      <span class="register-value">Gate releases on governed evidence. Prove exact artifact behavior across explicit replay matrices. Eliminate ambiguity in high-assurance supply-chain workflows.</span>
     </div>
-    <div class="preamble-field">
-      <span class="preamble-label">Invariant</span>
-      <span class="preamble-value invariant">Same inputs + same tool identity = byte-identical governed output.</span>
+    <div class="register-row">
+      <span class="register-label">Invariant</span>
+      <span class="register-value declared">Same inputs + same tool identity = byte-identical governed output.</span>
     </div>
   </div>
-  <div class="preamble-close"></div>
-</header>
-
-<main>
 
   <!-- ============================================================
        TIER 1 — THESIS + PROOF METHOD
        ============================================================ -->
 
   <!-- 01 — SCOPE -->
-  <section>
-    <div class="section-id">
-      <span class="section-num">01</span>
-      <span class="section-name">Scope</span>
-      <span class="section-rule"></span>
+  <div class="section">
+    <div class="section-header">
+      <span class="section-index">01</span>
+      <span class="section-title">Scope</span>
+      <span class="section-status">Declared</span>
     </div>
-    <p>
+
+    <p class="prose">
       Invariant Labs builds infrastructure where <strong>correctness is the product</strong>.
       We develop deterministic data processing libraries, standards-grade conformance tooling,
       and engineering practices that produce governed evidence of correctness — not assertions
       of it.
     </p>
-    <p>
+    <p class="prose">
       The stack operates at the lowest layers of the software supply chain: IEEE 754
       floating-point formatting, JSON canonicalization, and deterministic build verification.
       These are the layers where one silent mismatch invalidates every assurance built
       above them.
     </p>
-    <p>
+    <p class="prose">
       The stack is designed for environments where ambiguity is a defect, leniency is a
       liability, and rejection is the safe outcome. Unit tests provide confidence. Evidence
       bundles provide proof. We do not ship on confidence alone.
     </p>
-  </section>
+  </div>
 
   <!-- 02 — FAILURE CLASS -->
-  <section>
-    <div class="section-id">
-      <span class="section-num">02</span>
-      <span class="section-name">Failure Class</span>
-      <span class="section-rule"></span>
+  <div class="section">
+    <div class="section-header">
+      <span class="section-index">02</span>
+      <span class="section-title">Failure Class</span>
+      <span class="section-status">Assurance problem</span>
     </div>
-    <div class="section-note">The assurance problem this infrastructure addresses</div>
 
-    <p>
+    <p class="prose">
       Software supply chains fail silently when foundational primitives produce inconsistent
       output. A JSON serializer that formats the same floating-point value differently across
       platforms. A canonicalization routine that accepts malformed input on one distribution
       and rejects it on another. A build that passes all tests but produces a different
       binary from the same source.
     </p>
-    <p>
+    <p class="prose">
       These are not hypothetical failures. They are the class of defect that propagates
       upward through every signature, hash, and attestation built on top of them — and
       they are invisible to conventional testing.
     </p>
-    <p>
+    <p class="prose">
       Invariant Labs exists to close that gap: <strong>deterministic primitives with governed
       evidence that they behave identically across explicit matrices</strong>. Not assertions
       of correctness. Proof of it — scoped, bounded, and independently verifiable.
     </p>
-  </section>
+  </div>
 
   <!-- 03 — CONFORMANCE EVIDENCE -->
-  <section>
-    <div class="section-id">
-      <span class="section-num">03</span>
-      <span class="section-name">Conformance Evidence</span>
-      <span class="section-rule"></span>
+  <div class="section">
+    <div class="section-header">
+      <span class="section-index">03</span>
+      <span class="section-title">Conformance Evidence</span>
+      <span class="section-status">Core method</span>
     </div>
-    <div class="section-note">Evidence methodology — core differentiator</div>
 
-    <p>
+    <p class="prose">
       Releases are gated on offline replay evidence — not test passage alone.
       A replay harness executes canonical operations across distributions and
       architectures, captures four independent SHA-256 digest streams, and
@@ -632,58 +614,60 @@
       is permitted.
     </p>
 
-    <div class="contain">
-      <div class="contain-register">
-        <div class="contain-row">
-          <span class="contain-label">Method</span>
-          <span class="contain-value">Offline replay · 12 nodes · 5 cold replays · 60 independent executions</span>
+    <div class="evidence">
+      <div class="evidence-header">Replay matrix specification</div>
+      <div class="evidence-body">
+        <div class="evidence-row">
+          <span class="evidence-label">Method</span>
+          <span class="evidence-value">Offline replay · 12 nodes · 5 cold replays · 60 independent executions</span>
         </div>
-        <div class="contain-row">
-          <span class="contain-label">Nodes</span>
-          <span class="contain-value">Debian · Ubuntu · Alpine · Fedora · Rocky · openSUSE — container + VM</span>
+        <div class="evidence-row">
+          <span class="evidence-label">Nodes</span>
+          <span class="evidence-value">Debian · Ubuntu · Alpine · Fedora · Rocky · openSUSE — container + VM</span>
         </div>
-        <div class="contain-row">
-          <span class="contain-label">Streams</span>
-          <span class="contain-value">Canonical digest · Verify digest · Failure class digest · Exit code digest</span>
+        <div class="evidence-row">
+          <span class="evidence-label">Streams</span>
+          <span class="evidence-value">Canonical digest · Verify digest · Failure class digest · Exit code digest</span>
         </div>
-        <div class="contain-row">
-          <span class="contain-label">Binding</span>
-          <span class="contain-value">SHA-256 chain: evidence → bundle → vectors → source commit</span>
+        <div class="evidence-row">
+          <span class="evidence-label">Binding</span>
+          <span class="evidence-value">SHA-256 chain: evidence → bundle → vectors → source commit</span>
         </div>
-        <div class="contain-row">
-          <span class="contain-label">Gate</span>
-          <span class="contain-value">Hard release gate · evidence-required · no default path</span>
+        <div class="evidence-row">
+          <span class="evidence-label">Gate</span>
+          <span class="evidence-value">Hard release gate · evidence-required · no default path</span>
         </div>
       </div>
     </div>
 
-    <p>
+    <p class="prose">
       The evidence does not claim all possible builds are deterministic.
       It claims this exact binary, built from this exact source commit,
       produced identical output across an explicit replay matrix. The boundary
       between engineering evidence and overclaiming is the boundary we govern.
     </p>
-  </section>
-
-  <div class="tier-label">Current Foundation</div>
+  </div>
 
   <!-- ============================================================
        TIER 2 — CURRENT FOUNDATION
        ============================================================ -->
+  <div class="tier">
+    <div class="tier-label">Current Foundation</div>
+  </div>
 
   <!-- 04 — INFRASTRUCTURE -->
-  <section>
-    <div class="section-id">
-      <span class="section-num">04</span>
-      <span class="section-name">Infrastructure</span>
-      <span class="section-rule"></span>
+  <div class="section">
+    <div class="section-header">
+      <span class="section-index">04</span>
+      <span class="section-title">Infrastructure</span>
+      <span class="section-status">Available</span>
     </div>
-    <div class="section-note">Available now — foundational primitives</div>
+    <div class="section-desc">Foundational primitives — released and maintained</div>
 
-    <a class="registry-item" href="https://github.com/lattice-substrate/json-canon">
-      <div class="registry-name">json-canon</div>
-      <div class="registry-meta">Go · Apache 2.0 · github.com/lattice-substrate/json-canon</div>
-      <div class="registry-desc">
+    <a class="artifact" href="https://github.com/lattice-substrate/json-canon">
+      <div class="artifact-name">json-canon</div>
+      <div class="artifact-meta">Go · Apache 2.0 · github.com/lattice-substrate/json-canon</div>
+      <div class="artifact-desc">
         Deterministic RFC 8785 JSON Canonicalization Scheme. Strict RFC 8259 parser
         rejecting lone surrogates, duplicate keys, and noncharacters. ECMA-262
         number formatting with even-digit tie-breaking. UTF-16 code-unit key sorting.
@@ -692,10 +676,10 @@
       </div>
     </a>
 
-    <a class="registry-item" href="https://github.com/lattice-substrate/jcs-schubfach">
-      <div class="registry-name">jcs-schubfach</div>
-      <div class="registry-meta">Go · Apache 2.0 · github.com/lattice-substrate/jcs-schubfach</div>
-      <div class="registry-desc">
+    <a class="artifact" href="https://github.com/lattice-substrate/jcs-schubfach">
+      <div class="artifact-name">jcs-schubfach</div>
+      <div class="artifact-meta">Go · Apache 2.0 · github.com/lattice-substrate/jcs-schubfach</div>
+      <div class="artifact-desc">
         Fixed-width Schubfach digit generation for RFC 8785 number formatting.
         Same ECMA-262 conformance contract, same output bytes, no multiprecision
         arithmetic. 31.3% geometric mean throughput improvement over Burger-Dybvig
@@ -703,27 +687,27 @@
       </div>
     </a>
 
-    <a class="registry-item" href="https://github.com/lattice-substrate">
-      <div class="registry-name">Lattice Substrate</div>
-      <div class="registry-meta">GitHub · github.com/lattice-substrate · 11 repositories</div>
-      <div class="registry-desc">
+    <a class="artifact" href="https://github.com/lattice-substrate">
+      <div class="artifact-name">Lattice Substrate</div>
+      <div class="artifact-meta">GitHub · github.com/lattice-substrate · 11 repositories</div>
+      <div class="artifact-desc">
         Organization home for deterministic infrastructure primitives.
         Four digit-generation algorithms across two languages (Go, Rust),
         benchmark laboratory, conformance harness, and research artifacts.
       </div>
     </a>
-  </section>
+  </div>
 
   <!-- 05 — ENGINEERING -->
-  <section>
-    <div class="section-id">
-      <span class="section-num">05</span>
-      <span class="section-name">Engineering</span>
-      <span class="section-rule"></span>
+  <div class="section">
+    <div class="section-header">
+      <span class="section-index">05</span>
+      <span class="section-title">Engineering</span>
+      <span class="section-status">Doctrine</span>
     </div>
-    <div class="section-note">Implementation doctrine and methods</div>
+    <div class="section-desc">Implementation notes and methods</div>
 
-    <a class="log-entry" href="https://lattice-substrate.github.io/blog/2026/02/27/shortest-roundtrip-ieee754-burger-dybvig/">
+    <a class="log" href="https://lattice-substrate.github.io/blog/2026/02/27/shortest-roundtrip-ieee754-burger-dybvig/">
       <div class="log-head">
         <span class="log-date">2026-02-27</span>
         <span class="log-dur">28 min</span>
@@ -732,7 +716,7 @@
       <div class="log-series">Part 1 of 4 · Building a JSON Canonicalization Primitive in Go</div>
     </a>
 
-    <a class="log-entry" href="https://lattice-substrate.github.io/blog/2026/02/26/strict-rfc8259-json-parser/">
+    <a class="log" href="https://lattice-substrate.github.io/blog/2026/02/26/strict-rfc8259-json-parser/">
       <div class="log-head">
         <span class="log-date">2026-02-26</span>
         <span class="log-dur">24 min</span>
@@ -741,7 +725,7 @@
       <div class="log-series">Part 2 of 4</div>
     </a>
 
-    <a class="log-entry" href="https://lattice-substrate.github.io/blog/2026/02/25/small-decisions-infrastructure-primitive/">
+    <a class="log" href="https://lattice-substrate.github.io/blog/2026/02/25/small-decisions-infrastructure-primitive/">
       <div class="log-head">
         <span class="log-date">2026-02-25</span>
         <span class="log-dur">19 min</span>
@@ -750,7 +734,7 @@
       <div class="log-series">Part 3 of 4</div>
     </a>
 
-    <a class="log-entry" href="https://lattice-substrate.github.io/blog/2026/02/24/proving-determinism-evidence-release/">
+    <a class="log" href="https://lattice-substrate.github.io/blog/2026/02/24/proving-determinism-evidence-release/">
       <div class="log-head">
         <span class="log-date">2026-02-24</span>
         <span class="log-dur">20 min</span>
@@ -759,7 +743,7 @@
       <div class="log-series">Part 4 of 4</div>
     </a>
 
-    <a class="log-entry" href="https://lattice-substrate.github.io/blog/2026/03/05/multiprecision-to-fixed-width-schubfach/">
+    <a class="log" href="https://lattice-substrate.github.io/blog/2026/03/05/multiprecision-to-fixed-width-schubfach/">
       <div class="log-head">
         <span class="log-date">2026-03-05</span>
         <span class="log-dur">18 min</span>
@@ -767,29 +751,30 @@
       </div>
     </a>
 
-    <a class="log-entry" href="https://lattice-substrate.github.io/blog/2026/03/04/fma-go-floating-point-determinism/">
+    <a class="log" href="https://lattice-substrate.github.io/blog/2026/03/04/fma-go-floating-point-determinism/">
       <div class="log-head">
         <span class="log-date">2026-03-04</span>
         <span class="log-dur">11 min</span>
         <span class="log-title">IEEE 754 Compliance Does Not Mean Platform Independence</span>
       </div>
     </a>
-  </section>
-
-  <div class="tier-label">Research Basis</div>
+  </div>
 
   <!-- ============================================================
-       TIER 3 — SUPPORTING CREDIBILITY
+       TIER 3 — RESEARCH BASIS
        ============================================================ -->
+  <div class="tier">
+    <div class="tier-label">Research Basis</div>
+  </div>
 
   <!-- 06 — RESEARCH -->
-  <section>
-    <div class="section-id">
-      <span class="section-num">06</span>
-      <span class="section-name">Research</span>
-      <span class="section-rule"></span>
+  <div class="section">
+    <div class="section-header">
+      <span class="section-index">06</span>
+      <span class="section-title">Research</span>
+      <span class="section-status">Under review</span>
     </div>
-    <div class="section-note">Empirical basis for evidence-bearing release engineering</div>
+    <div class="section-desc">Empirical basis for evidence-bearing release engineering</div>
 
     <div class="pub-title">
       Fixed-Width vs. Multiprecision Digit Generation for JSON Canonicalization:
@@ -797,56 +782,58 @@
     </div>
     <div class="pub-status">Under peer review — Software: Practice and Experience (Wiley)</div>
 
-    <div class="contain">
-      <div class="contain-register">
-        <div class="contain-row">
-          <span class="contain-label">Design</span>
-          <span class="contain-value">4×2 factorial · 4 algorithms · 2 languages (Go, Rust) · 8 implementations</span>
+    <div class="evidence">
+      <div class="evidence-header">Study parameters</div>
+      <div class="evidence-body">
+        <div class="evidence-row">
+          <span class="evidence-label">Design</span>
+          <span class="evidence-value">4×2 factorial · 4 algorithms · 2 languages (Go, Rust) · 8 implementations</span>
         </div>
-        <div class="contain-row">
-          <span class="contain-label">Corpus</span>
-          <span class="contain-value">286,362 cross-engine oracle test vectors</span>
+        <div class="evidence-row">
+          <span class="evidence-label">Corpus</span>
+          <span class="evidence-value">286,362 cross-engine oracle test vectors</span>
         </div>
-        <div class="contain-row">
-          <span class="contain-label">Algorithms</span>
-          <span class="contain-value">Schubfach · Ryu · Dragonbox · Burger-Dybvig</span>
+        <div class="evidence-row">
+          <span class="evidence-label">Algorithms</span>
+          <span class="evidence-value">Schubfach · Ryu · Dragonbox · Burger-Dybvig</span>
         </div>
-        <div class="contain-row">
-          <span class="contain-label">Finding</span>
-          <span class="contain-value">Subnormal formatting failures in two reference implementations</span>
+        <div class="evidence-row">
+          <span class="evidence-label">Finding</span>
+          <span class="evidence-value">Subnormal formatting failures in two reference implementations</span>
         </div>
-        <div class="contain-row">
-          <span class="contain-label">Dataset</span>
-          <span class="contain-value"><a href="https://doi.org/10.5281/zenodo.18890836">doi:10.5281/zenodo.18890836</a></span>
+        <div class="evidence-row">
+          <span class="evidence-label">Dataset</span>
+          <span class="evidence-value"><a href="https://doi.org/10.5281/zenodo.18890836">doi:10.5281/zenodo.18890836</a></span>
         </div>
       </div>
     </div>
 
-    <p>
+    <p class="prose">
       This research underpins the company's approach to evidence-bearing release
       engineering and deterministic primitive selection. Conformance failures
       discovered in existing reference implementations informed the design of
       json-canon's validation methodology and replay evidence gates.
     </p>
-  </section>
-
-  <div class="tier-label">Engagement</div>
+  </div>
 
   <!-- ============================================================
        TIER 4 — ENGAGEMENT
        ============================================================ -->
+  <div class="tier">
+    <div class="tier-label">Engagement</div>
+  </div>
 
   <!-- 07 — CONTACT -->
-  <section>
-    <div class="section-id">
-      <span class="section-num">07</span>
-      <span class="section-name">Contact</span>
-      <span class="section-rule"></span>
+  <div class="section">
+    <div class="section-header">
+      <span class="section-index">07</span>
+      <span class="section-title">Contact</span>
     </div>
-    <div class="contact-line">
+
+    <div class="contact-row">
       <a href="mailto:mark@provemark.io">mark@provemark.io</a>
     </div>
-    <div class="contact-line" style="margin-top: 0.4rem;">
+    <div class="contact-row" style="margin-top: 0.3rem;">
       Mark Lenhardt · Founder, Principal Engineer
     </div>
     <div class="contact-categories">
@@ -854,22 +841,18 @@
       evidence methodology, regulated evaluation pilots, technical partnerships.
     </div>
 
-    <!-- Upcoming — reduced weight, event metadata -->
-    <div class="event-compact">
-      <span class="event-name">IIW 42</span> — Internet Identity Workshop ·
+    <div class="contact-event">
+      <strong>IIW 42</strong> — Internet Identity Workshop ·
       April 28–30, 2026 · Mountain View, CA<br>
       Presenting on JCS number formatting conformance.
     </div>
-  </section>
+  </div>
 
-</main>
-
-<!-- ============================================================
-     COLOPHON
-     ============================================================ -->
-<footer>
+  <!-- ============================================================
+       COLOPHON — terminal boundary
+       ============================================================ -->
   <div class="colophon">
-    <div class="colophon-left">
+    <div>
       <div class="colophon-entity">Invariant Labs</div>
       <div class="colophon-legal">Limited Liability Company<br>Plymouth, Minnesota</div>
     </div>
@@ -878,7 +861,8 @@
       <div class="colophon-domain">provemark.io</div>
     </div>
   </div>
-</footer>
+
+</div>
 
 </body>
 </html>
