@@ -147,15 +147,15 @@
 
   .matrix {
     display: grid;
-    grid-template-columns: repeat(12, 11px);
-    gap: 3px;
+    grid-template-columns: repeat(12, 14px);
+    gap: 4px;
     transition: opacity 0.3s;
   }
 
   .matrix i {
     display: block;
-    width: 11px;
-    height: 11px;
+    width: 14px;
+    height: 14px;
     background: rgba(255,255,255,0.08);
     transition: background 0.3s;
   }
@@ -240,6 +240,75 @@
   .band--white { background: var(--white); }
   .band--gray { background: var(--gray-50); }
   .band--white + .band--white { border-top: 1px solid var(--gray-100); }
+
+  /* Dark band: evidence vault */
+  .band--dark {
+    background: #111111;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 20px 20px;
+    color: var(--white);
+  }
+
+  .band--dark .section-label { color: rgba(255,255,255,0.4); }
+  .band--dark .prose { color: rgba(255,255,255,0.6); }
+  .band--dark .prose strong { color: rgba(255,255,255,0.9); }
+
+  .band--dark .evidence {
+    background: rgba(255,255,255,0.03);
+    border-color: rgba(255,255,255,0.1);
+    border-left-color: rgba(255,255,255,0.3);
+  }
+
+  .band--dark .evidence-title {
+    color: rgba(255,255,255,0.45);
+    border-bottom-color: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.02);
+  }
+
+  .band--dark .evidence-label { color: rgba(255,255,255,0.35); }
+  .band--dark .evidence-value { color: rgba(255,255,255,0.65); }
+
+  /* Accent section: left border emphasis */
+  .band-inner--accent {
+    border-left: 4px solid var(--ink);
+    padding-left: 1.5rem;
+  }
+
+  /* Binding chain visualization */
+  .chain {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 0;
+    font-family: var(--mono);
+  }
+
+  .chain-node {
+    flex: 1;
+    padding: 0.65rem 0.5rem;
+    text-align: center;
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .chain-link {
+    width: 2rem;
+    height: 1px;
+    flex-shrink: 0;
+  }
+
+  .band--dark .chain-node {
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.55);
+    background: rgba(255,255,255,0.02);
+  }
+
+  .band--dark .chain-link {
+    background: rgba(255,255,255,0.15);
+  }
 
   .band-inner {
     max-width: var(--content);
@@ -725,6 +794,11 @@
     .event-date-block { text-align: left; display: flex; align-items: baseline; gap: 0.5rem; padding: 0.4rem 0.6rem; }
     .event-day { font-size: 1rem; }
 
+    .chain { flex-wrap: wrap; gap: 0.5rem; }
+    .chain-link { display: none; }
+    .chain-node { flex: 0 0 calc(50% - 0.25rem); }
+    .band-inner--accent { padding-left: 1rem; border-left-width: 3px; }
+
     .footer-inner { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
     .footer-right { text-align: left; }
     .footer-mark { display: none; }
@@ -771,7 +845,7 @@
           <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
           <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
         </div>
-        <div class="matrix-label">12 nodes × 5 replays<br>60 independent executions</div>
+        <div class="matrix-label">12 nodes × 5 replays<br>60 independent executions<br>All streams: identical</div>
       </div>
     </div>
     <div class="hero-foot">
@@ -835,7 +909,7 @@
      THE ASSURANCE PROBLEM
      ============================================================ -->
 <div class="band band--gray">
-  <div class="band-inner">
+  <div class="band-inner band-inner--accent">
     <div class="section-label">The Assurance Problem</div>
     <p class="prose">
       Software supply chains fail silently when foundational primitives produce inconsistent
@@ -860,7 +934,7 @@
 <!-- ============================================================
      CONFORMANCE EVIDENCE
      ============================================================ -->
-<div class="band band--white" id="evidence">
+<div class="band band--dark" id="evidence">
   <div class="band-inner">
     <div class="section-label">Conformance Evidence</div>
     <p class="prose">
@@ -895,6 +969,16 @@
           <span class="evidence-value">Hard release gate · evidence-required · no default path</span>
         </div>
       </div>
+    </div>
+
+    <div class="chain" aria-label="SHA-256 binding chain">
+      <div class="chain-node">Evidence</div>
+      <div class="chain-link"></div>
+      <div class="chain-node">Bundle</div>
+      <div class="chain-link"></div>
+      <div class="chain-node">Vectors</div>
+      <div class="chain-link"></div>
+      <div class="chain-node">Source commit</div>
     </div>
 
     <p class="prose">
