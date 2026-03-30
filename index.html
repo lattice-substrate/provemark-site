@@ -45,12 +45,28 @@
   }
 
   /* ================================================================
+     DOCUMENT CLASSIFICATION — governed artifact header
+     ================================================================ */
+  .doc-class {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 1.25rem var(--gutter) 0;
+    font-family: var(--font-mono);
+    font-size: 0.52rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-quiet);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ================================================================
      PREAMBLE
      ================================================================ */
   .preamble {
     max-width: var(--content-width);
     margin: 0 auto;
-    padding: 3rem var(--gutter) 0;
+    padding: 1rem var(--gutter) 0;
   }
 
   .preamble-entity {
@@ -401,12 +417,26 @@
   }
 
   /* ================================================================
-     TIER DIVIDER — visual weight break between section groups
+     TIER LABELS — semantic structural hierarchy
      ================================================================ */
-  .tier-break {
+  .tier-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rule-strong);
+  }
+
+  .tier-label::before,
+  .tier-label::after {
+    content: '';
+    flex: 1;
     height: 1px;
     background: var(--rule);
-    margin-top: 2.5rem;
   }
 
   /* ================================================================
@@ -473,7 +503,8 @@
       --gutter: 1.25rem;
       --label-width: 9ch;
     }
-    .preamble { padding-top: 2rem; }
+    .doc-class { padding-top: 0.75rem; }
+    .preamble { padding-top: 0.75rem; }
     .preamble-field { flex-direction: column; gap: 0.1rem; margin-bottom: 0.5rem; }
     .contain-row { flex-direction: column; gap: 0.1rem; }
     .colophon { flex-direction: column; align-items: flex-start; gap: 1rem; }
@@ -484,6 +515,14 @@
 </style>
 </head>
 <body>
+
+<!-- ============================================================
+     DOCUMENT CLASSIFICATION
+     ============================================================ -->
+<div class="doc-class">
+  <span>Site document · Revision 2 · 2026-03</span>
+  <span>provemark.io</span>
+</div>
 
 <!-- ============================================================
      PREAMBLE
@@ -499,6 +538,10 @@
     <div class="preamble-field">
       <span class="preamble-label">Domain</span>
       <span class="preamble-value">IEEE 754 floating-point formatting, JSON canonicalization (RFC 8785), deterministic build verification.</span>
+    </div>
+    <div class="preamble-field">
+      <span class="preamble-label">For</span>
+      <span class="preamble-value">Release gating · Supply chain assurance · Regulated artifact production · Critical infrastructure qualification.</span>
     </div>
     <div class="preamble-field">
       <span class="preamble-label">Outcome</span>
@@ -544,10 +587,38 @@
     </p>
   </section>
 
-  <!-- 02 — CONFORMANCE EVIDENCE (promoted — core differentiator) -->
+  <!-- 02 — FAILURE CLASS -->
   <section>
     <div class="section-id">
       <span class="section-num">02</span>
+      <span class="section-name">Failure Class</span>
+      <span class="section-rule"></span>
+    </div>
+    <div class="section-note">The assurance problem this infrastructure addresses</div>
+
+    <p>
+      Software supply chains fail silently when foundational primitives produce inconsistent
+      output. A JSON serializer that formats the same floating-point value differently across
+      platforms. A canonicalization routine that accepts malformed input on one distribution
+      and rejects it on another. A build that passes all tests but produces a different
+      binary from the same source.
+    </p>
+    <p>
+      These are not hypothetical failures. They are the class of defect that propagates
+      upward through every signature, hash, and attestation built on top of them — and
+      they are invisible to conventional testing.
+    </p>
+    <p>
+      Invariant Labs exists to close that gap: <strong>deterministic primitives with governed
+      evidence that they behave identically across explicit matrices</strong>. Not assertions
+      of correctness. Proof of it — scoped, bounded, and independently verifiable.
+    </p>
+  </section>
+
+  <!-- 03 — CONFORMANCE EVIDENCE -->
+  <section>
+    <div class="section-id">
+      <span class="section-num">03</span>
       <span class="section-name">Conformance Evidence</span>
       <span class="section-rule"></span>
     </div>
@@ -594,20 +665,20 @@
     </p>
   </section>
 
-  <div class="tier-break"></div>
+  <div class="tier-label">Current Foundation</div>
 
   <!-- ============================================================
        TIER 2 — CURRENT FOUNDATION
        ============================================================ -->
 
-  <!-- 03 — INFRASTRUCTURE -->
+  <!-- 04 — INFRASTRUCTURE -->
   <section>
     <div class="section-id">
-      <span class="section-num">03</span>
+      <span class="section-num">04</span>
       <span class="section-name">Infrastructure</span>
       <span class="section-rule"></span>
     </div>
-    <div class="section-note">Current baseline — available now</div>
+    <div class="section-note">Available now — foundational primitives</div>
 
     <a class="registry-item" href="https://github.com/lattice-substrate/json-canon">
       <div class="registry-name">json-canon</div>
@@ -643,10 +714,10 @@
     </a>
   </section>
 
-  <!-- 04 — ENGINEERING -->
+  <!-- 05 — ENGINEERING -->
   <section>
     <div class="section-id">
-      <span class="section-num">04</span>
+      <span class="section-num">05</span>
       <span class="section-name">Engineering</span>
       <span class="section-rule"></span>
     </div>
@@ -705,20 +776,20 @@
     </a>
   </section>
 
-  <div class="tier-break"></div>
+  <div class="tier-label">Research Basis</div>
 
   <!-- ============================================================
        TIER 3 — SUPPORTING CREDIBILITY
        ============================================================ -->
 
-  <!-- 05 — RESEARCH -->
+  <!-- 06 — RESEARCH -->
   <section>
     <div class="section-id">
-      <span class="section-num">05</span>
+      <span class="section-num">06</span>
       <span class="section-name">Research</span>
       <span class="section-rule"></span>
     </div>
-    <div class="section-note">Research basis for evidence-bearing release engineering</div>
+    <div class="section-note">Empirical basis for evidence-bearing release engineering</div>
 
     <div class="pub-title">
       Fixed-Width vs. Multiprecision Digit Generation for JSON Canonicalization:
@@ -759,16 +830,16 @@
     </p>
   </section>
 
-  <div class="tier-break"></div>
+  <div class="tier-label">Engagement</div>
 
   <!-- ============================================================
        TIER 4 — ENGAGEMENT
        ============================================================ -->
 
-  <!-- 06 — CONTACT -->
+  <!-- 07 — CONTACT -->
   <section>
     <div class="section-id">
-      <span class="section-num">06</span>
+      <span class="section-num">07</span>
       <span class="section-name">Contact</span>
       <span class="section-rule"></span>
     </div>
@@ -803,7 +874,7 @@
       <div class="colophon-legal">Limited Liability Company<br>Plymouth, Minnesota</div>
     </div>
     <div class="colophon-right">
-      <div class="colophon-version">v1 · 2026-03</div>
+      <div class="colophon-version">v2 · 2026-03</div>
       <div class="colophon-domain">provemark.io</div>
     </div>
   </div>
