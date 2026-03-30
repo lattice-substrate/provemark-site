@@ -7,23 +7,26 @@
 <meta name="description" content="Deterministic verification infrastructure for software supply chains. Conformance tooling, regulatory evidence systems, and foundational security primitives. Same inputs, same tool identity, byte-identical governed output.">
 <link rel="canonical" href="https://provemark.io">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
   :root {
-    --bg: #F5F5F3;
-    --bg-dark: #141413;
-    --text-primary: #1A1A19;
-    --text-secondary: #3D3D3B;
-    --text-tertiary: #8A8A85;
-    --text-quiet: #6B6B66;
-    --accent: #9C9C96;
-    --rule: #D4D4CF;
-    --rule-strong: #B0B0AA;
-    --rule-dark: #2A2A28;
+    --bg: #F4F4F4;
+    --bg-dark: #111111;
+    --text-primary: #111111;
+    --text-body: #333333;
+    --text-secondary: #555555;
+    --text-tertiary: #888888;
+    --text-quiet: #999999;
+    --rule: #CCCCCC;
+    --rule-light: #DDDDDD;
+    --rule-strong: #999999;
+    --contain-bg: #FAFAFA;
+    --contain-border: #BBBBBB;
     --font-serif: 'Source Serif 4', Georgia, serif;
     --font-mono: 'JetBrains Mono', 'Courier New', monospace;
-    --content-width: 680px;
+    --content-width: 660px;
     --gutter: 2rem;
+    --label-width: 11ch;
   }
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -41,70 +44,124 @@
     line-height: 1.6;
   }
 
-  /* === HEADER === */
-  header {
-    padding: 3.5rem var(--gutter) 0;
+  /* ================================================================
+     PREAMBLE — document header, not marketing hero
+     ================================================================ */
+  .preamble {
     max-width: var(--content-width);
     margin: 0 auto;
+    padding: 3rem var(--gutter) 0;
   }
 
-  .entity-mark {
+  .preamble-entity {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.18em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--text-primary);
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.5rem;
   }
 
-  header h1 {
-    font-family: var(--font-serif);
-    font-size: 1.05rem;
-    font-weight: 300;
-    color: var(--text-secondary);
-    line-height: 1.65;
-    max-width: 580px;
-  }
-
-  .header-rule {
-    width: 100%;
+  .preamble-rule {
     height: 1px;
-    background: var(--rule-strong);
-    margin-top: 2rem;
+    background: var(--text-primary);
+    margin-bottom: 1.5rem;
   }
 
-  /* === MAIN === */
+  .preamble-fields {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.85;
+    color: var(--text-body);
+  }
+
+  .preamble-field {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 0.6rem;
+  }
+
+  .preamble-label {
+    flex: 0 0 var(--label-width);
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .preamble-value {
+    flex: 1;
+    color: var(--text-body);
+  }
+
+  .preamble-value.invariant {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .preamble-close {
+    height: 1px;
+    background: var(--rule);
+    margin-top: 1.25rem;
+  }
+
+  /* ================================================================
+     MAIN
+     ================================================================ */
   main {
     max-width: var(--content-width);
     margin: 0 auto;
-    padding: 0 var(--gutter) 2rem;
+    padding: 0 var(--gutter);
   }
 
   section {
-    margin-top: 2.5rem;
+    margin-top: 2.25rem;
   }
 
-  /* === SECTION LABELS === */
-  section h2 {
+  /* ================================================================
+     SECTION HEADERS — specification-style
+     ================================================================ */
+  .section-id {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .section-num {
     font-family: var(--font-mono);
-    font-size: 0.6rem;
+    font-size: 0.58rem;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    letter-spacing: 0.05em;
+  }
+
+  .section-name {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
     font-weight: 500;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--text-tertiary);
-    margin-bottom: 1.25rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--rule);
   }
 
-  /* === PROSE === */
+  .section-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--rule-light);
+  }
+
+  /* ================================================================
+     PROSE
+     ================================================================ */
   p {
-    font-size: 0.92rem;
+    font-size: 0.88rem;
     font-weight: 300;
-    color: var(--text-secondary);
+    color: var(--text-body);
     line-height: 1.75;
-    margin-bottom: 0.85rem;
+    margin-bottom: 0.75rem;
   }
 
   p strong {
@@ -112,215 +169,228 @@
     color: var(--text-primary);
   }
 
-  /* === DOCTRINE BLOCK === */
-  .doctrine {
-    margin: 1.5rem 0;
-    padding: 1.25rem 0;
-    border-top: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
+  /* ================================================================
+     GOVERNED CONTAINMENT — bordered evidence/data blocks
+     ================================================================ */
+  .contain {
+    border: 1px solid var(--contain-border);
+    background: var(--contain-bg);
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
   }
 
-  .doctrine-statement {
+  .contain-register {
     font-family: var(--font-mono);
-    font-size: 0.78rem;
-    font-weight: 400;
-    color: var(--text-primary);
-    line-height: 1.7;
-    letter-spacing: 0.01em;
+    font-size: 0.65rem;
+    line-height: 2;
+    color: var(--text-secondary);
   }
 
-  /* === WORK ITEMS === */
-  .work-item {
-    display: block;
-    padding: 1.1rem 0;
+  .contain-row {
+    display: flex;
+    align-items: baseline;
+  }
+
+  .contain-label {
+    flex: 0 0 var(--label-width);
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .contain-value {
+    flex: 1;
+    color: var(--text-secondary);
+  }
+
+  .contain-value a {
+    color: var(--text-secondary);
+    text-decoration: none;
     border-bottom: 1px solid var(--rule);
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .contain-value a:hover {
+    color: var(--text-primary);
+    border-bottom-color: var(--text-tertiary);
+  }
+
+  /* ================================================================
+     REGISTRY ITEMS — infrastructure entries
+     ================================================================ */
+  .registry-item {
+    display: block;
+    padding: 0.85rem 0 0.85rem 0.85rem;
+    border-left: 2px solid var(--rule);
+    margin-bottom: 0.75rem;
     text-decoration: none;
     color: inherit;
-    transition: border-color 0.2s ease;
+    transition: border-color 0.15s ease;
   }
 
-  .work-item:first-of-type {
-    border-top: 1px solid var(--rule);
+  .registry-item:hover {
+    border-left-color: var(--text-primary);
   }
 
-  .work-item:hover {
-    border-bottom-color: var(--accent);
-  }
-
-  .work-item:hover .work-title {
+  .registry-item:hover .registry-name {
     color: var(--text-primary);
   }
 
-  .work-title {
-    font-size: 0.92rem;
-    font-weight: 400;
-    color: var(--text-secondary);
-    margin-bottom: 0.2rem;
-    transition: color 0.2s ease;
+  .registry-name {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text-body);
+    margin-bottom: 0.15rem;
+    transition: color 0.15s ease;
   }
 
-  .work-meta {
+  .registry-meta {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
-    color: var(--text-tertiary);
+    font-size: 0.6rem;
+    color: var(--text-quiet);
     letter-spacing: 0.02em;
     margin-bottom: 0.3rem;
   }
 
-  .work-desc {
-    font-size: 0.82rem;
+  .registry-desc {
+    font-size: 0.8rem;
     font-weight: 300;
-    color: var(--text-quiet);
+    color: var(--text-secondary);
     line-height: 1.6;
   }
 
-  /* === ARTICLE ITEMS === */
-  .article-item {
+  /* ================================================================
+     LOG — article register, date-first
+     ================================================================ */
+  .log-entry {
     display: block;
-    padding: 0.85rem 0;
-    border-bottom: 1px solid var(--rule);
     text-decoration: none;
     color: inherit;
-    transition: border-color 0.2s ease;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--rule-light);
+    transition: border-color 0.15s ease;
   }
 
-  .article-item:first-of-type {
-    border-top: 1px solid var(--rule);
+  .log-entry:first-of-type {
+    border-top: 1px solid var(--rule-light);
   }
 
-  .article-item:hover {
-    border-bottom-color: var(--accent);
+  .log-entry:hover {
+    border-bottom-color: var(--rule-strong);
   }
 
-  .article-item:hover .article-title {
+  .log-entry:hover .log-title {
     color: var(--text-primary);
   }
 
-  .article-title {
-    font-size: 0.85rem;
+  .log-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .log-date {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--text-quiet);
+    flex: 0 0 auto;
+    letter-spacing: 0.02em;
+  }
+
+  .log-dur {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    color: var(--text-quiet);
+    flex: 0 0 auto;
+  }
+
+  .log-title {
+    font-size: 0.8rem;
     font-weight: 400;
     color: var(--text-secondary);
-    line-height: 1.5;
-    transition: color 0.2s ease;
+    line-height: 1.45;
+    transition: color 0.15s ease;
   }
 
-  .article-meta {
+  .log-series {
     font-family: var(--font-mono);
-    font-size: 0.62rem;
-    color: var(--text-tertiary);
-    letter-spacing: 0.02em;
-    margin-top: 0.15rem;
+    font-size: 0.55rem;
+    color: var(--text-quiet);
+    margin-left: calc(var(--label-width) - 0.5rem);
+    margin-top: 0.1rem;
   }
 
-  /* === RESEARCH === */
-  .publication {
-    margin-bottom: 1.25rem;
-  }
-
-  .publication-title {
-    font-size: 0.88rem;
+  /* ================================================================
+     PUBLICATION
+     ================================================================ */
+  .pub-title {
+    font-size: 0.85rem;
     font-weight: 400;
     color: var(--text-primary);
     line-height: 1.55;
     margin-bottom: 0.2rem;
   }
 
-  .publication-venue {
+  .pub-status {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
-    color: var(--text-tertiary);
-    margin-bottom: 0.15rem;
-  }
-
-  .doi {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--text-tertiary);
-  }
-
-  .doi a {
-    color: var(--text-quiet);
-    text-decoration: none;
-    border-bottom: 1px solid var(--rule);
-    transition: color 0.2s ease, border-color 0.2s ease;
-  }
-
-  .doi a:hover {
-    color: var(--text-primary);
-    border-bottom-color: var(--accent);
-  }
-
-  /* === REGISTRY / EVIDENCE BLOCK === */
-  .evidence-register {
-    margin: 1.25rem 0;
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    line-height: 2;
-    color: var(--text-quiet);
-  }
-
-  .evidence-register .label {
-    color: var(--text-tertiary);
-    display: inline-block;
-    min-width: 12ch;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
     font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 1rem;
   }
 
-  .evidence-register .value {
-    color: var(--text-secondary);
-  }
-
-  /* === CONTACT === */
+  /* ================================================================
+     CONTACT
+     ================================================================ */
   .contact-line {
     font-family: var(--font-mono);
-    font-size: 0.78rem;
-    color: var(--text-quiet);
-    margin-bottom: 0.3rem;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
   }
 
   .contact-line a {
-    color: var(--text-secondary);
+    color: var(--text-body);
     text-decoration: none;
     border-bottom: 1px solid var(--rule);
-    transition: color 0.2s ease, border-color 0.2s ease;
+    transition: color 0.15s ease, border-color 0.15s ease;
   }
 
   .contact-line a:hover {
     color: var(--text-primary);
-    border-bottom-color: var(--accent);
+    border-bottom-color: var(--text-tertiary);
   }
 
-  /* === UPCOMING === */
-  .event {
+  /* ================================================================
+     EVENT
+     ================================================================ */
+  .event-block {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--text-quiet);
-    line-height: 1.8;
-  }
-
-  .event .event-name {
+    font-size: 0.68rem;
     color: var(--text-secondary);
+    line-height: 1.85;
+  }
+
+  .event-name {
     font-weight: 500;
+    color: var(--text-body);
   }
 
-  /* === SECTION DIVIDER === */
-  .section-rule {
-    width: 100%;
-    height: 1px;
-    background: var(--rule);
-    margin-top: 2.5rem;
-  }
-
-  /* === FOOTER === */
+  /* ================================================================
+     FOOTER — document colophon
+     ================================================================ */
   footer {
     background: var(--bg-dark);
-    margin-top: 2rem;
-    padding: 2.5rem var(--gutter);
+    margin-top: 3rem;
+    padding: 2rem var(--gutter);
   }
 
-  .footer-inner {
+  .colophon {
     max-width: var(--content-width);
     margin: 0 auto;
     display: flex;
@@ -328,70 +398,99 @@
     align-items: flex-end;
   }
 
-  .footer-left {}
-
-  .footer-entity {
+  .colophon-left {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 500;
-    color: #D4D4CF;
-    letter-spacing: 0.15em;
+  }
+
+  .colophon-entity {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: #CCCCCC;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
   }
 
-  .footer-legal {
-    font-family: var(--font-mono);
-    font-size: 0.58rem;
-    color: #4A4A45;
+  .colophon-legal {
+    font-size: 0.55rem;
+    font-weight: 400;
+    color: #444444;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     margin-top: 0.35rem;
+    line-height: 1.6;
   }
 
-  .footer-right {
+  .colophon-right {
+    font-family: var(--font-mono);
     text-align: right;
   }
 
-  .footer-location {
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    color: #4A4A45;
+  .colophon-version {
+    font-size: 0.55rem;
+    color: #444444;
     letter-spacing: 0.05em;
   }
 
-  .footer-rule {
-    width: 2rem;
-    height: 1px;
-    background: #2A2A28;
-    margin-left: auto;
-    margin-bottom: 0.5rem;
+  .colophon-domain {
+    font-size: 0.6rem;
+    color: #666666;
+    margin-top: 0.25rem;
   }
 
-  /* === RESPONSIVE === */
+  /* ================================================================
+     RESPONSIVE
+     ================================================================ */
   @media (max-width: 600px) {
     :root {
       --gutter: 1.25rem;
+      --label-width: 9ch;
     }
-    header { padding-top: 2.5rem; }
-    .footer-inner { flex-direction: column; align-items: flex-start; gap: 1rem; }
-    .footer-right { text-align: left; }
-    .footer-rule { margin-left: 0; }
-    .evidence-register .label { min-width: 10ch; }
+    .preamble { padding-top: 2rem; }
+    .preamble-field { flex-direction: column; gap: 0.1rem; margin-bottom: 0.5rem; }
+    .contain-row { flex-direction: column; gap: 0.1rem; }
+    .colophon { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .colophon-right { text-align: left; }
+    .log-head { flex-wrap: wrap; }
+    .log-series { margin-left: 0; }
   }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="entity-mark">Invariant Labs</div>
-  <h1>Deterministic verification infrastructure for software supply chains. Conformance tooling, evidence systems, and foundational security primitives.</h1>
-  <div class="header-rule"></div>
+<!-- ============================================================
+     PREAMBLE
+     ============================================================ -->
+<header class="preamble">
+  <div class="preamble-entity">Invariant Labs</div>
+  <div class="preamble-rule"></div>
+  <div class="preamble-fields">
+    <div class="preamble-field">
+      <span class="preamble-label">Scope</span>
+      <span class="preamble-value">Deterministic verification infrastructure for software supply chains.</span>
+    </div>
+    <div class="preamble-field">
+      <span class="preamble-label">Domain</span>
+      <span class="preamble-value">IEEE 754 floating-point formatting, JSON canonicalization (RFC 8785), deterministic build verification.</span>
+    </div>
+    <div class="preamble-field">
+      <span class="preamble-label">Invariant</span>
+      <span class="preamble-value invariant">Same inputs + same tool identity = byte-identical governed output.</span>
+    </div>
+  </div>
+  <div class="preamble-close"></div>
 </header>
 
 <main>
 
+  <!-- ============================================================
+       01 — SCOPE
+       ============================================================ -->
   <section>
-    <h2>Scope</h2>
+    <div class="section-id">
+      <span class="section-num">01</span>
+      <span class="section-name">Scope</span>
+      <span class="section-rule"></span>
+    </div>
     <p>
       Invariant Labs builds infrastructure where <strong>correctness is the product</strong>.
       We develop deterministic data processing libraries, standards-grade conformance tooling,
@@ -399,42 +498,43 @@
       of it.
     </p>
     <p>
-      Our work operates at the lowest layers of the software supply chain: IEEE 754
-      floating-point formatting, JSON canonicalization (RFC 8785), and deterministic build
-      verification. The stack is designed for environments where ambiguity is a defect,
-      leniency is a liability, and rejection is the safe outcome.
+      The stack is designed for environments where ambiguity is a defect, leniency is a
+      liability, and rejection is the safe outcome. Every claim is narrow. Every output is
+      deterministic. Every release is gated on cryptographic evidence of cross-platform byte
+      stability.
     </p>
-    <div class="doctrine">
-      <div class="doctrine-statement">
-        Same inputs + same tool identity = byte-identical governed output.
-      </div>
-    </div>
     <p>
-      Every claim is narrow. Every output is deterministic. Every release is gated on
-      cryptographic evidence of cross-platform byte stability. Unit tests don't prove
-      determinism — evidence bundles do.
+      Unit tests provide confidence. Evidence bundles provide proof. We do not ship
+      on confidence alone.
     </p>
   </section>
 
+  <!-- ============================================================
+       02 — INFRASTRUCTURE
+       ============================================================ -->
   <section>
-    <h2>Infrastructure</h2>
+    <div class="section-id">
+      <span class="section-num">02</span>
+      <span class="section-name">Infrastructure</span>
+      <span class="section-rule"></span>
+    </div>
 
-    <a class="work-item" href="https://github.com/lattice-substrate/json-canon">
-      <div class="work-title">json-canon</div>
-      <div class="work-meta">Go · Apache 2.0 · github.com/lattice-substrate/json-canon</div>
-      <div class="work-desc">
+    <a class="registry-item" href="https://github.com/lattice-substrate/json-canon">
+      <div class="registry-name">json-canon</div>
+      <div class="registry-meta">Go · Apache 2.0 · github.com/lattice-substrate/json-canon</div>
+      <div class="registry-desc">
         Deterministic RFC 8785 JSON Canonicalization Scheme. Strict RFC 8259 parser
         rejecting lone surrogates, duplicate keys, and noncharacters. ECMA-262
         number formatting with even-digit tie-breaking. UTF-16 code-unit key sorting.
-        Seven independent resource bounds. Stable CLI ABI with thirteen-class failure
-        taxonomy. Zero dependencies. 286,362 cross-engine oracle test vectors.
+        Thirteen-class failure taxonomy with stable exit codes. Seven independent resource
+        bounds. Zero dependencies. 286,362 cross-engine oracle test vectors.
       </div>
     </a>
 
-    <a class="work-item" href="https://github.com/lattice-substrate/jcs-schubfach">
-      <div class="work-title">jcs-schubfach</div>
-      <div class="work-meta">Go · Apache 2.0 · github.com/lattice-substrate/jcs-schubfach</div>
-      <div class="work-desc">
+    <a class="registry-item" href="https://github.com/lattice-substrate/jcs-schubfach">
+      <div class="registry-name">jcs-schubfach</div>
+      <div class="registry-meta">Go · Apache 2.0 · github.com/lattice-substrate/jcs-schubfach</div>
+      <div class="registry-desc">
         Fixed-width Schubfach digit generation for RFC 8785 number formatting.
         Same ECMA-262 conformance contract, same output bytes, no multiprecision
         arithmetic. 31.3% geometric mean throughput improvement over Burger-Dybvig
@@ -442,73 +542,132 @@
       </div>
     </a>
 
-    <a class="work-item" href="https://github.com/lattice-substrate">
-      <div class="work-title">Lattice Substrate</div>
-      <div class="work-meta">GitHub · github.com/lattice-substrate · 11 repositories</div>
-      <div class="work-desc">
+    <a class="registry-item" href="https://github.com/lattice-substrate">
+      <div class="registry-name">Lattice Substrate</div>
+      <div class="registry-meta">GitHub · github.com/lattice-substrate · 11 repositories</div>
+      <div class="registry-desc">
         Organization home for deterministic infrastructure primitives.
         Four digit-generation algorithms across two languages (Go, Rust),
         benchmark laboratory, conformance harness, and research artifacts.
       </div>
     </a>
-
   </section>
 
+  <!-- ============================================================
+       03 — ENGINEERING
+       ============================================================ -->
   <section>
-    <h2>Engineering</h2>
+    <div class="section-id">
+      <span class="section-num">03</span>
+      <span class="section-name">Engineering</span>
+      <span class="section-rule"></span>
+    </div>
 
-    <a class="article-item" href="https://lattice-substrate.github.io/blog/2026/02/27/shortest-roundtrip-ieee754-burger-dybvig/">
-      <div class="article-title">Shortest Round-Trip: Implementing IEEE 754 to Decimal Conversion in Go</div>
-      <div class="article-meta">2026-02-27 · 28 min · Part 1 of 4</div>
-    </a>
-
-    <a class="article-item" href="https://lattice-substrate.github.io/blog/2026/02/26/strict-rfc8259-json-parser/">
-      <div class="article-title">What Your JSON Parser Doesn't Reject: Building a Strict RFC 8259 Parser in Go</div>
-      <div class="article-meta">2026-02-26 · 24 min · Part 2 of 4</div>
-    </a>
-
-    <a class="article-item" href="https://lattice-substrate.github.io/blog/2026/02/25/small-decisions-infrastructure-primitive/">
-      <div class="article-title">The Small Decisions That Infrastructure Depends On</div>
-      <div class="article-meta">2026-02-25 · 19 min · Part 3 of 4</div>
-    </a>
-
-    <a class="article-item" href="https://lattice-substrate.github.io/blog/2026/02/24/proving-determinism-evidence-release/">
-      <div class="article-title">Proving Determinism: Evidence-Based Release Engineering</div>
-      <div class="article-meta">2026-02-24 · 20 min · Part 4 of 4</div>
-    </a>
-
-    <a class="article-item" href="https://lattice-substrate.github.io/blog/2026/03/05/multiprecision-to-fixed-width-schubfach/">
-      <div class="article-title">From Multiprecision to Fixed-Width: Replacing Burger-Dybvig with Schubfach</div>
-      <div class="article-meta">2026-03-05 · 18 min</div>
-    </a>
-
-    <a class="article-item" href="https://lattice-substrate.github.io/blog/2026/03/04/fma-go-floating-point-determinism/">
-      <div class="article-title">IEEE 754 Compliance Does Not Mean Platform Independence</div>
-      <div class="article-meta">2026-03-04 · 11 min</div>
-    </a>
-
-  </section>
-
-  <section>
-    <h2>Research</h2>
-    <div class="publication">
-      <div class="publication-title">
-        Fixed-Width vs. Multiprecision Digit Generation for JSON Canonicalization:
-        A Four-Algorithm Empirical Study
+    <a class="log-entry" href="https://lattice-substrate.github.io/blog/2026/02/27/shortest-roundtrip-ieee754-burger-dybvig/">
+      <div class="log-head">
+        <span class="log-date">2026-02-27</span>
+        <span class="log-dur">28 min</span>
+        <span class="log-title">Shortest Round-Trip: Implementing IEEE 754 to Decimal Conversion in Go</span>
       </div>
-      <div class="publication-venue">Under peer review — Software: Practice and Experience (Wiley)</div>
+      <div class="log-series">Part 1 of 4 · Building a JSON Canonicalization Primitive in Go</div>
+    </a>
+
+    <a class="log-entry" href="https://lattice-substrate.github.io/blog/2026/02/26/strict-rfc8259-json-parser/">
+      <div class="log-head">
+        <span class="log-date">2026-02-26</span>
+        <span class="log-dur">24 min</span>
+        <span class="log-title">What Your JSON Parser Doesn't Reject: Building a Strict RFC 8259 Parser in Go</span>
+      </div>
+      <div class="log-series">Part 2 of 4</div>
+    </a>
+
+    <a class="log-entry" href="https://lattice-substrate.github.io/blog/2026/02/25/small-decisions-infrastructure-primitive/">
+      <div class="log-head">
+        <span class="log-date">2026-02-25</span>
+        <span class="log-dur">19 min</span>
+        <span class="log-title">The Small Decisions That Infrastructure Depends On</span>
+      </div>
+      <div class="log-series">Part 3 of 4</div>
+    </a>
+
+    <a class="log-entry" href="https://lattice-substrate.github.io/blog/2026/02/24/proving-determinism-evidence-release/">
+      <div class="log-head">
+        <span class="log-date">2026-02-24</span>
+        <span class="log-dur">20 min</span>
+        <span class="log-title">Proving Determinism: Evidence-Based Release Engineering</span>
+      </div>
+      <div class="log-series">Part 4 of 4</div>
+    </a>
+
+    <a class="log-entry" href="https://lattice-substrate.github.io/blog/2026/03/05/multiprecision-to-fixed-width-schubfach/">
+      <div class="log-head">
+        <span class="log-date">2026-03-05</span>
+        <span class="log-dur">18 min</span>
+        <span class="log-title">From Multiprecision to Fixed-Width: Replacing Burger-Dybvig with Schubfach</span>
+      </div>
+    </a>
+
+    <a class="log-entry" href="https://lattice-substrate.github.io/blog/2026/03/04/fma-go-floating-point-determinism/">
+      <div class="log-head">
+        <span class="log-date">2026-03-04</span>
+        <span class="log-dur">11 min</span>
+        <span class="log-title">IEEE 754 Compliance Does Not Mean Platform Independence</span>
+      </div>
+    </a>
+  </section>
+
+  <!-- ============================================================
+       04 — RESEARCH
+       ============================================================ -->
+  <section>
+    <div class="section-id">
+      <span class="section-num">04</span>
+      <span class="section-name">Research</span>
+      <span class="section-rule"></span>
     </div>
-    <div class="evidence-register">
-      <div><span class="label">Design</span> <span class="value">4×2 factorial · 4 algorithms · 2 languages (Go, Rust) · 8 implementations</span></div>
-      <div><span class="label">Corpus</span> <span class="value">286,362 cross-engine oracle test vectors</span></div>
-      <div><span class="label">Finding</span> <span class="value">Subnormal formatting failures in two reference implementations</span></div>
-      <div><span class="label">Algorithms</span> <span class="value">Schubfach · Ryu · Dragonbox · Burger-Dybvig</span></div>
-      <div><span class="label">Dataset</span> <span class="value"><a href="https://doi.org/10.5281/zenodo.18890836" class="doi-link" style="color: var(--text-quiet); text-decoration: none; border-bottom: 1px solid var(--rule);">doi:10.5281/zenodo.18890836</a></span></div>
+
+    <div class="pub-title">
+      Fixed-Width vs. Multiprecision Digit Generation for JSON Canonicalization:
+      A Four-Algorithm Empirical Study
+    </div>
+    <div class="pub-status">Under peer review — Software: Practice and Experience (Wiley)</div>
+
+    <div class="contain">
+      <div class="contain-register">
+        <div class="contain-row">
+          <span class="contain-label">Design</span>
+          <span class="contain-value">4×2 factorial · 4 algorithms · 2 languages (Go, Rust) · 8 implementations</span>
+        </div>
+        <div class="contain-row">
+          <span class="contain-label">Corpus</span>
+          <span class="contain-value">286,362 cross-engine oracle test vectors</span>
+        </div>
+        <div class="contain-row">
+          <span class="contain-label">Algorithms</span>
+          <span class="contain-value">Schubfach · Ryu · Dragonbox · Burger-Dybvig</span>
+        </div>
+        <div class="contain-row">
+          <span class="contain-label">Finding</span>
+          <span class="contain-value">Subnormal formatting failures in two reference implementations</span>
+        </div>
+        <div class="contain-row">
+          <span class="contain-label">Dataset</span>
+          <span class="contain-value"><a href="https://doi.org/10.5281/zenodo.18890836">doi:10.5281/zenodo.18890836</a></span>
+        </div>
+      </div>
     </div>
   </section>
 
+  <!-- ============================================================
+       05 — CONFORMANCE EVIDENCE
+       ============================================================ -->
   <section>
-    <h2>Conformance Evidence</h2>
+    <div class="section-id">
+      <span class="section-num">05</span>
+      <span class="section-name">Conformance Evidence</span>
+      <span class="section-rule"></span>
+    </div>
+
     <p>
       Releases are gated on offline replay evidence — not test passage alone.
       A replay harness executes canonical operations across distributions and
@@ -516,12 +675,32 @@
       requires byte-identical output across the full matrix before any release
       is permitted.
     </p>
-    <div class="evidence-register">
-      <div><span class="label">Method</span> <span class="value">Offline replay · 12 nodes · 5 cold replays each · 60 independent executions</span></div>
-      <div><span class="label">Streams</span> <span class="value">Canonical digest · Verify digest · Failure class digest · Exit code digest</span></div>
-      <div><span class="label">Binding</span> <span class="value">SHA-256 chain from evidence → bundle → vectors → source commit</span></div>
-      <div><span class="label">Gate</span> <span class="value">Hard release gate · evidence-required · no default path</span></div>
+
+    <div class="contain">
+      <div class="contain-register">
+        <div class="contain-row">
+          <span class="contain-label">Method</span>
+          <span class="contain-value">Offline replay · 12 nodes · 5 cold replays · 60 independent executions</span>
+        </div>
+        <div class="contain-row">
+          <span class="contain-label">Nodes</span>
+          <span class="contain-value">Debian · Ubuntu · Alpine · Fedora · Rocky · openSUSE — container + VM</span>
+        </div>
+        <div class="contain-row">
+          <span class="contain-label">Streams</span>
+          <span class="contain-value">Canonical digest · Verify digest · Failure class digest · Exit code digest</span>
+        </div>
+        <div class="contain-row">
+          <span class="contain-label">Binding</span>
+          <span class="contain-value">SHA-256 chain: evidence → bundle → vectors → source commit</span>
+        </div>
+        <div class="contain-row">
+          <span class="contain-label">Gate</span>
+          <span class="contain-value">Hard release gate · evidence-required · no default path</span>
+        </div>
+      </div>
     </div>
+
     <p>
       The evidence does not claim all possible builds are deterministic.
       It claims this exact binary, built from this exact source commit,
@@ -530,36 +709,53 @@
     </p>
   </section>
 
+  <!-- ============================================================
+       06 — UPCOMING
+       ============================================================ -->
   <section>
-    <h2>Upcoming</h2>
-    <div class="event">
+    <div class="section-id">
+      <span class="section-num">06</span>
+      <span class="section-name">Upcoming</span>
+      <span class="section-rule"></span>
+    </div>
+    <div class="event-block">
       <span class="event-name">IIW 42</span> — Internet Identity Workshop<br>
       April 28–30, 2026 · Mountain View, CA<br>
       Presenting on JCS number formatting conformance
     </div>
   </section>
 
+  <!-- ============================================================
+       07 — CONTACT
+       ============================================================ -->
   <section>
-    <h2>Contact</h2>
+    <div class="section-id">
+      <span class="section-num">07</span>
+      <span class="section-name">Contact</span>
+      <span class="section-rule"></span>
+    </div>
     <div class="contact-line">
       <a href="mailto:mark@provemark.io">mark@provemark.io</a>
     </div>
-    <div class="contact-line" style="margin-top: 0.5rem;">
+    <div class="contact-line" style="margin-top: 0.4rem;">
       Mark Lenhardt · Founder, Principal Engineer
     </div>
   </section>
 
 </main>
 
+<!-- ============================================================
+     COLOPHON
+     ============================================================ -->
 <footer>
-  <div class="footer-inner">
-    <div class="footer-left">
-      <div class="footer-entity">Invariant Labs</div>
-      <div class="footer-legal">Limited Liability Company · Plymouth, Minnesota</div>
+  <div class="colophon">
+    <div class="colophon-left">
+      <div class="colophon-entity">Invariant Labs</div>
+      <div class="colophon-legal">Limited Liability Company<br>Plymouth, Minnesota</div>
     </div>
-    <div class="footer-right">
-      <div class="footer-rule"></div>
-      <div class="footer-location">provemark.io</div>
+    <div class="colophon-right">
+      <div class="colophon-version">v1 · 2026-03</div>
+      <div class="colophon-domain">provemark.io</div>
     </div>
   </div>
 </footer>
