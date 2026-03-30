@@ -152,13 +152,26 @@
     transition: opacity 0.3s;
   }
 
+  @keyframes cell-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
   .matrix i {
     display: block;
     width: 14px;
     height: 14px;
     background: rgba(255,255,255,0.08);
     transition: background 0.3s;
+    opacity: 0;
+    animation: cell-in 0.4s ease forwards;
   }
+
+  .matrix i:nth-child(-n+12) { animation-delay: 0.3s; }
+  .matrix i:nth-child(n+13):nth-child(-n+24) { animation-delay: 0.5s; }
+  .matrix i:nth-child(n+25):nth-child(-n+36) { animation-delay: 0.7s; }
+  .matrix i:nth-child(n+37):nth-child(-n+48) { animation-delay: 0.9s; }
+  .matrix i:nth-child(n+49) { animation-delay: 1.1s; }
 
   .matrix:hover i {
     background: rgba(255,255,255,0.16);
@@ -308,6 +321,97 @@
 
   .band--dark .chain-link {
     background: rgba(255,255,255,0.15);
+  }
+
+  /* Wider evidence band */
+  .band--dark .band-inner {
+    max-width: 860px;
+  }
+
+  /* Split layout: key statement + prose side by side */
+  .split {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .split-statement {
+    font-family: var(--mono);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  .split-sub {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--gray-500);
+    line-height: 1.7;
+    margin-top: 0.85rem;
+  }
+
+  /* Replay matrix: labeled conformance grid */
+  .replay-matrix {
+    margin: 2rem 0;
+    font-family: var(--mono);
+  }
+
+  .replay-labels, .replay-row {
+    display: grid;
+    grid-template-columns: 10ch repeat(6, 1fr);
+  }
+
+  .replay-labels span {
+    font-size: 0.5rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 0 0 0.5rem;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .replay-env {
+    font-size: 0.5rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    display: flex;
+    align-items: center;
+  }
+
+  .replay-cell {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    padding: 0.65rem 0;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .replay-cell i {
+    display: block;
+    width: 9px;
+    height: 9px;
+    background: rgba(255,255,255,0.12);
+  }
+
+  .replay-summary {
+    font-size: 0.52rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.25);
+    text-align: center;
+    margin-top: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .matrix i, .replay-cell i { animation: none; opacity: 1; }
   }
 
   .band-inner {
@@ -794,10 +898,17 @@
     .event-date-block { text-align: left; display: flex; align-items: baseline; gap: 0.5rem; padding: 0.4rem 0.6rem; }
     .event-day { font-size: 1rem; }
 
+    .split { grid-template-columns: 1fr; gap: 1.5rem; }
+    .split-statement { font-size: 1.15rem; }
+
     .chain { flex-wrap: wrap; gap: 0.5rem; }
     .chain-link { display: none; }
     .chain-node { flex: 0 0 calc(50% - 0.25rem); }
     .band-inner--accent { padding-left: 1rem; border-left-width: 3px; }
+
+    .replay-labels, .replay-row { grid-template-columns: 8ch repeat(6, 1fr); }
+    .replay-cell { gap: 3px; padding: 0.4rem 0; }
+    .replay-cell i { width: 6px; height: 6px; }
 
     .footer-inner { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
     .footer-right { text-align: left; }
@@ -885,23 +996,31 @@
 <div class="band band--white">
   <div class="band-inner">
     <div class="section-label">Scope</div>
-    <p class="prose">
-      Invariant Labs builds infrastructure where <strong>correctness is the product</strong>.
-      We develop deterministic data processing libraries, standards-grade conformance tooling,
-      and engineering practices that produce governed evidence of correctness, not assertions
-      of it.
-    </p>
-    <p class="prose">
-      The stack operates at the lowest layers of the software supply chain: IEEE 754
-      floating-point formatting, JSON canonicalization, and deterministic build verification.
-      These are the layers where one silent mismatch invalidates every assurance built
-      above them.
-    </p>
-    <p class="prose">
-      The stack is designed for environments where ambiguity is a defect, leniency is a
-      liability, and rejection is the safe outcome. Unit tests provide confidence. Evidence
-      bundles provide proof. We do not ship on confidence alone.
-    </p>
+    <div class="split">
+      <div class="split-lead">
+        <div class="split-statement">Correctness<br>is the<br>product.</div>
+        <div class="split-sub">Governed evidence,<br>not assertions.</div>
+      </div>
+      <div class="split-body">
+        <p class="prose">
+          Invariant Labs builds infrastructure where <strong>correctness is the product</strong>.
+          We develop deterministic data processing libraries, standards-grade conformance tooling,
+          and engineering practices that produce governed evidence of correctness, not assertions
+          of it.
+        </p>
+        <p class="prose">
+          The stack operates at the lowest layers of the software supply chain: IEEE 754
+          floating-point formatting, JSON canonicalization, and deterministic build verification.
+          These are the layers where one silent mismatch invalidates every assurance built
+          above them.
+        </p>
+        <p class="prose">
+          The stack is designed for environments where ambiguity is a defect, leniency is a
+          liability, and rejection is the safe outcome. Unit tests provide confidence. Evidence
+          bundles provide proof. We do not ship on confidence alone.
+        </p>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -944,6 +1063,37 @@
       requires byte-identical output across the full matrix before any release
       is permitted.
     </p>
+
+    <div class="replay-matrix" aria-label="Conformance replay matrix: 6 distributions, 2 environments, 5 replays each">
+      <div class="replay-labels">
+        <span></span>
+        <span>Debian</span>
+        <span>Ubuntu</span>
+        <span>Alpine</span>
+        <span>Fedora</span>
+        <span>Rocky</span>
+        <span>openSUSE</span>
+      </div>
+      <div class="replay-row">
+        <span class="replay-env">Container</span>
+        <span class="replay-cell"><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="replay-cell"><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="replay-cell"><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="replay-cell"><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="replay-cell"><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="replay-cell"><i></i><i></i><i></i><i></i><i></i></span>
+      </div>
+      <div class="replay-row">
+        <span class="replay-env">VM</span>
+        <span class="replay-cell"><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="replay-cell"><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="replay-cell"><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="replay-cell"><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="replay-cell"><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="replay-cell"><i></i><i></i><i></i><i></i><i></i></span>
+      </div>
+      <div class="replay-summary">60 executions · 4 digest streams · all identical</div>
+    </div>
 
     <div class="evidence">
       <div class="evidence-title">Replay matrix specification</div>
