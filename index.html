@@ -3,186 +3,227 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Invariant Labs — Evidence-Grade Infrastructure Primitives</title>
-<meta name="description" content="Deterministic verification infrastructure for software supply chains. Conformance tooling, regulatory evidence systems, and foundational security primitives. Same inputs, same tool identity, byte-identical governed output.">
+<title>Invariant Labs — Deterministic Verification Infrastructure</title>
+<meta name="description" content="Deterministic verification infrastructure for software supply chains. Conformance tooling, evidence systems, and foundational security primitives for release gating, supply chain assurance, and regulated artifact production.">
 <link rel="canonical" href="https://provemark.io">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap');
-
   :root {
-    --bg: #FAFAF8;
-    --surface: #FFFFFF;
-    --surface-inset: #F5F5F3;
+    --white: #FFFFFF;
+    --gray-50: #F8F8F6;
+    --gray-100: #F0EFED;
+    --gray-200: #DDDCDA;
+    --gray-300: #C0BFBD;
+    --gray-400: #999897;
+    --gray-500: #777675;
+    --gray-600: #555453;
     --ink: #1A1A1A;
-    --ink-body: #2A2A2A;
-    --ink-secondary: #4A4A4A;
-    --ink-dim: #777777;
-    --ink-ghost: #999999;
-    --border-heavy: #1A1A1A;
-    --border-mid: #AAAAAA;
-    --border-light: #D0D0CE;
-    --border-ghost: #E0E0DD;
+    --ink-soft: #2E2E2E;
+    --ink-mid: #444444;
+    --black: #0C0C0C;
+    --serif: 'Source Serif 4', Georgia, serif;
     --mono: 'JetBrains Mono', 'Courier New', monospace;
-    --page-width: 680px;
-    --margin: 2rem;
-    --field-label: 12ch;
-    --cell-gap: 1px;
+    --content: 740px;
+    --gutter: 2.5rem;
   }
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html {
-    font-size: 15px;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: var(--mono);
-    line-height: 1.65;
-  }
+  html { font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+  body { background: var(--white); color: var(--ink); font-family: var(--serif); line-height: 1.7; }
 
   /* ================================================================
-     PAGE FRAME — the entire document is a governed artifact
+     HERO BAND — dark, commanding, full-width
      ================================================================ */
-  .page {
-    max-width: var(--page-width);
+  .hero-band {
+    background: var(--black);
+    color: var(--white);
+    padding: 0 var(--gutter);
+  }
+
+  .hero-inner {
+    max-width: var(--content);
     margin: 0 auto;
-    padding: 0 var(--margin);
   }
 
-  /* ================================================================
-     DOCUMENT HEADER — classification metadata
-     ================================================================ */
-  .doc-header {
-    padding: 1.5rem 0 0;
+  /* NAV */
+  .nav {
+    padding: 1.75rem 0;
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    font-size: 0.6rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ink-ghost);
-    border-bottom: 2px solid var(--border-heavy);
-    padding-bottom: 0.75rem;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
   }
 
-  .doc-header-right {
-    text-align: right;
+  .nav-brand {
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.04em;
   }
 
-  /* ================================================================
-     ENTITY BLOCK
-     ================================================================ */
-  .entity {
-    padding: 1.25rem 0;
-    border-bottom: 1px solid var(--border-mid);
-  }
-
-  .entity-name {
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--ink);
-  }
-
-  /* ================================================================
-     FIELD REGISTER — key-value metadata, the site's core visual unit
-     ================================================================ */
-  .register {
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--border-light);
-  }
-
-  .register-row {
+  .nav-links {
     display: flex;
-    align-items: baseline;
-    padding: 0.3rem 0;
+    gap: 1.75rem;
   }
 
-  .register-label {
-    flex: 0 0 var(--field-label);
-    font-size: 0.6rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ink-dim);
+  .nav-links a {
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    transition: color 0.2s;
   }
 
-  .register-value {
-    flex: 1;
-    font-size: 0.72rem;
-    font-weight: 400;
-    color: var(--ink-body);
-    line-height: 1.7;
+  .nav-links a:hover {
+    color: rgba(255,255,255,0.9);
   }
 
-  .register-value.declared {
-    font-weight: 500;
-    color: var(--ink);
+  /* HERO CONTENT */
+  .hero {
+    padding: 4.5rem 0 4rem;
   }
 
-  /* ================================================================
-     SECTION — governed content blocks
-     ================================================================ */
-  .section {
-    margin-top: 2rem;
-  }
-
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    gap: 0.6rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--border-light);
-    margin-bottom: 1rem;
-  }
-
-  .section-index {
-    font-size: 0.6rem;
-    font-weight: 500;
-    color: var(--ink-dim);
-    letter-spacing: 0.05em;
-  }
-
-  .section-title {
-    font-size: 0.6rem;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink-dim);
-  }
-
-  .section-status {
-    margin-left: auto;
-    font-size: 0.52rem;
-    font-weight: 400;
+  .hero-name {
+    font-family: var(--mono);
+    font-size: 2.6rem;
+    font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--ink-ghost);
+    color: var(--white);
+    margin-bottom: 2rem;
   }
 
-  .section-desc {
-    font-size: 0.55rem;
-    font-weight: 400;
-    color: var(--ink-ghost);
-    letter-spacing: 0.04em;
-    margin-bottom: 1rem;
+  .hero-lead {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.88);
+    line-height: 1.45;
+    margin-bottom: 1.25rem;
+    max-width: 580px;
+  }
+
+  .hero-sub {
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .hero-invariant {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.01em;
+  }
+
+  .hero-email {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+  }
+
+  .hero-email a {
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .hero-email a:hover {
+    color: var(--white);
+    border-bottom-color: rgba(255,255,255,0.5);
   }
 
   /* ================================================================
-     PROSE — body text within sections
+     HIGHLIGHTS BAND — key numbers
+     ================================================================ */
+  .highlights-band {
+    background: var(--gray-50);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 2rem var(--gutter);
+  }
+
+  .highlights {
+    max-width: var(--content);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    font-family: var(--mono);
+  }
+
+  .highlight-num {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+    letter-spacing: -0.02em;
+  }
+
+  .highlight-text {
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+  }
+
+  /* ================================================================
+     CONTENT BANDS — full-width sections
+     ================================================================ */
+  .band {
+    padding: 3.5rem var(--gutter);
+  }
+
+  .band--white { background: var(--white); }
+  .band--gray { background: var(--gray-50); }
+
+  .band + .band--white { border-top: 1px solid var(--gray-100); }
+  .band--gray + .band { border-top: none; }
+
+  .band-inner {
+    max-width: var(--content);
+    margin: 0 auto;
+  }
+
+  /* ================================================================
+     SECTION LABELS
+     ================================================================ */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    margin-bottom: 1.5rem;
+  }
+
+  /* ================================================================
+     PROSE
      ================================================================ */
   .prose {
-    font-size: 0.78rem;
+    font-size: 1rem;
     font-weight: 300;
-    color: var(--ink-body);
+    color: var(--ink-mid);
     line-height: 1.85;
-    margin-bottom: 0.65rem;
+    margin-bottom: 0.85rem;
   }
+
+  .prose:last-child { margin-bottom: 0; }
 
   .prose strong {
     font-weight: 600;
@@ -190,146 +231,152 @@
   }
 
   /* ================================================================
-     EVIDENCE BLOCK — contained, bordered, inset
-     governed data that stands apart from prose
+     EVIDENCE BLOCKS — structured data containers
      ================================================================ */
   .evidence {
-    background: var(--surface);
-    border: 1px solid var(--border-mid);
-    margin: 1.25rem 0;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    margin: 1.75rem 0;
   }
 
-  .evidence-header {
-    font-size: 0.52rem;
+  .band--white .evidence {
+    background: var(--gray-50);
+  }
+
+  .evidence-title {
+    font-family: var(--mono);
+    font-size: 0.58rem;
     font-weight: 500;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--ink-dim);
-    padding: 0.6rem 1rem;
-    background: var(--surface-inset);
-    border-bottom: 1px solid var(--border-light);
+    color: var(--gray-500);
+    padding: 0.7rem 1.25rem;
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .band--white .evidence .evidence-title {
+    background: var(--gray-100);
+  }
+
+  .band--gray .evidence .evidence-title {
+    background: var(--gray-100);
   }
 
   .evidence-body {
-    padding: 0.75rem 1rem;
+    padding: 0.75rem 1.25rem;
   }
 
   .evidence-row {
     display: flex;
     align-items: baseline;
-    padding: 0.25rem 0;
-    font-size: 0.65rem;
-    line-height: 1.8;
+    padding: 0.2rem 0;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    line-height: 1.85;
   }
 
   .evidence-label {
-    flex: 0 0 var(--field-label);
+    flex: 0 0 11ch;
     font-size: 0.58rem;
     font-weight: 500;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--ink-dim);
+    color: var(--gray-500);
   }
 
   .evidence-value {
     flex: 1;
-    color: var(--ink-secondary);
+    color: var(--ink-mid);
   }
 
   .evidence-value a {
-    color: var(--ink-secondary);
+    color: var(--ink-mid);
     text-decoration: none;
-    border-bottom: 1px solid var(--border-light);
-    transition: color 0.15s, border-color 0.15s;
+    border-bottom: 1px solid var(--gray-200);
+    transition: color 0.2s, border-color 0.2s;
   }
 
   .evidence-value a:hover {
     color: var(--ink);
-    border-bottom-color: var(--ink-dim);
+    border-bottom-color: var(--gray-500);
   }
 
   /* ================================================================
-     TIER BOUNDARY — structural grouping with declared purpose
+     CARD GRID — infrastructure items as cards
      ================================================================ */
-  .tier {
-    margin-top: 2.5rem;
-    padding-top: 0.6rem;
-    border-top: 2px solid var(--border-heavy);
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
   }
 
-  .tier-label {
-    font-size: 0.52rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink-dim);
-    margin-bottom: 0;
-  }
-
-  /* ================================================================
-     ARTIFACT ENTRIES — clickable infrastructure items
-     ================================================================ */
-  .artifact {
+  .card {
     display: block;
     text-decoration: none;
     color: inherit;
-    padding: 0.75rem 0 0.75rem 0.85rem;
-    border-left: 2px solid var(--border-light);
-    margin-bottom: 0.5rem;
-    transition: border-color 0.15s;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    padding: 1.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
 
-  .artifact:hover {
-    border-left-color: var(--ink);
+  .card:hover {
+    border-color: var(--gray-400);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   }
 
-  .artifact:hover .artifact-name {
+  .card:hover .card-name {
     color: var(--ink);
   }
 
-  .artifact-name {
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: var(--ink-body);
-    transition: color 0.15s;
-    margin-bottom: 0.1rem;
+  .card:last-child {
+    grid-column: 1 / -1;
   }
 
-  .artifact-meta {
+  .card-name {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 0.2rem;
+    transition: color 0.2s;
+  }
+
+  .card-meta {
+    font-family: var(--mono);
     font-size: 0.58rem;
-    color: var(--ink-ghost);
-    letter-spacing: 0.02em;
-    margin-bottom: 0.25rem;
+    color: var(--gray-400);
+    margin-bottom: 0.65rem;
   }
 
-  .artifact-desc {
-    font-size: 0.72rem;
+  .card-desc {
+    font-size: 0.88rem;
     font-weight: 300;
-    color: var(--ink-secondary);
-    line-height: 1.65;
+    color: var(--gray-600);
+    line-height: 1.6;
   }
 
   /* ================================================================
-     LOG ENTRIES — engineering writing
+     LOG ENTRIES — engineering articles
      ================================================================ */
-  .log {
+  .log-entry {
     display: block;
     text-decoration: none;
     color: inherit;
-    padding: 0.45rem 0;
-    border-bottom: 1px solid var(--border-ghost);
-    transition: border-color 0.15s;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--gray-100);
+    transition: border-color 0.2s;
   }
 
-  .log:first-of-type {
-    border-top: 1px solid var(--border-ghost);
+  .log-entry:first-of-type {
+    border-top: 1px solid var(--gray-100);
   }
 
-  .log:hover {
-    border-bottom-color: var(--border-mid);
+  .log-entry:hover {
+    border-bottom-color: var(--gray-300);
   }
 
-  .log:hover .log-title {
+  .log-entry:hover .log-title {
     color: var(--ink);
   }
 
@@ -340,218 +387,303 @@
   }
 
   .log-date {
-    font-size: 0.58rem;
-    color: var(--ink-ghost);
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--gray-400);
     flex: 0 0 auto;
-    letter-spacing: 0.02em;
   }
 
   .log-dur {
-    font-size: 0.52rem;
-    color: var(--ink-ghost);
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    color: var(--gray-400);
     flex: 0 0 auto;
   }
 
   .log-title {
-    font-size: 0.72rem;
+    font-size: 0.9rem;
     font-weight: 400;
-    color: var(--ink-secondary);
+    color: var(--gray-600);
     line-height: 1.5;
-    transition: color 0.15s;
+    transition: color 0.2s;
   }
 
   .log-series {
-    font-size: 0.52rem;
-    color: var(--ink-ghost);
-    margin-left: calc(var(--field-label) - 1.5rem);
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    color: var(--gray-400);
     margin-top: 0.1rem;
+    padding-left: 8ch;
   }
 
   /* ================================================================
      PUBLICATION
      ================================================================ */
   .pub-title {
-    font-size: 0.78rem;
+    font-size: 1rem;
     font-weight: 400;
     color: var(--ink);
-    line-height: 1.6;
-    margin-bottom: 0.15rem;
-  }
-
-  .pub-status {
-    font-size: 0.55rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-dim);
-    margin-bottom: 1rem;
-  }
-
-  /* ================================================================
-     CONTACT REGISTER
-     ================================================================ */
-  .contact-row {
-    font-size: 0.72rem;
-    color: var(--ink-secondary);
+    line-height: 1.55;
     margin-bottom: 0.2rem;
   }
 
-  .contact-row a {
-    color: var(--ink-body);
-    text-decoration: none;
-    border-bottom: 1px solid var(--border-light);
-    transition: color 0.15s, border-color 0.15s;
-  }
-
-  .contact-row a:hover {
-    color: var(--ink);
-    border-bottom-color: var(--ink-dim);
-  }
-
-  .contact-categories {
+  .pub-status {
+    font-family: var(--mono);
     font-size: 0.6rem;
-    color: var(--ink-ghost);
-    margin-top: 0.75rem;
-    line-height: 1.8;
-  }
-
-  .contact-event {
-    font-size: 0.58rem;
-    color: var(--ink-ghost);
-    line-height: 1.7;
-    margin-top: 1.25rem;
-    padding-top: 0.75rem;
-    border-top: 1px solid var(--border-ghost);
-  }
-
-  .contact-event strong {
     font-weight: 500;
-    color: var(--ink-secondary);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    margin-bottom: 1.25rem;
   }
 
   /* ================================================================
-     COLOPHON — terminal boundary
+     CONTACT CARD
      ================================================================ */
-  .colophon {
-    margin-top: 3rem;
-    border-top: 2px solid var(--border-heavy);
-    padding: 1.25rem 0 3rem;
+  .contact-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    padding: 1.75rem;
+  }
+
+  .contact-email {
+    font-family: var(--mono);
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .contact-email a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 2px solid var(--gray-200);
+    transition: border-color 0.2s;
+  }
+
+  .contact-email a:hover {
+    border-bottom-color: var(--ink);
+  }
+
+  .contact-name {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--ink-mid);
+    margin-bottom: 1rem;
+  }
+
+  .contact-categories {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: var(--gray-500);
+    line-height: 1.9;
+  }
+
+  /* ================================================================
+     EVENT CARD
+     ================================================================ */
+  .event-card {
+    margin-top: 1.25rem;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: baseline;
+    gap: 1.75rem;
+    font-family: var(--mono);
+  }
+
+  .event-date-block {
+    flex: 0 0 auto;
+    text-align: center;
+    min-width: 5ch;
+  }
+
+  .event-month {
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+  }
+
+  .event-day {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .event-body {
+    flex: 1;
+  }
+
+  .event-name {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.15rem;
+  }
+
+  .event-details {
+    font-size: 0.65rem;
+    color: var(--ink-mid);
+    margin-bottom: 0.15rem;
+  }
+
+  .event-topic {
+    font-size: 0.62rem;
+    color: var(--gray-500);
+  }
+
+  /* ================================================================
+     FOOTER
+     ================================================================ */
+  footer {
+    background: var(--black);
+    padding: 2.5rem var(--gutter);
+  }
+
+  .footer-inner {
+    max-width: var(--content);
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: flex-end;
+    font-family: var(--mono);
   }
 
-  .colophon-entity {
-    font-size: 0.62rem;
+  .footer-entity {
+    font-size: 0.7rem;
     font-weight: 600;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--ink);
+    color: #BBBBBB;
   }
 
-  .colophon-legal {
-    font-size: 0.52rem;
-    font-weight: 400;
-    color: var(--ink-ghost);
+  .footer-legal {
+    font-size: 0.55rem;
+    color: #444444;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    margin-top: 0.3rem;
-    line-height: 1.6;
+    margin-top: 0.4rem;
+    line-height: 1.7;
   }
 
-  .colophon-right {
+  .footer-right {
     text-align: right;
   }
 
-  .colophon-version {
-    font-size: 0.52rem;
-    color: var(--ink-ghost);
-    letter-spacing: 0.05em;
+  .footer-version {
+    font-size: 0.55rem;
+    color: #444444;
   }
 
-  .colophon-domain {
-    font-size: 0.58rem;
-    color: var(--ink-dim);
+  .footer-domain {
+    font-size: 0.62rem;
+    color: #666666;
     margin-top: 0.2rem;
   }
 
   /* ================================================================
      RESPONSIVE
      ================================================================ */
-  @media (max-width: 600px) {
-    :root {
-      --margin: 1.25rem;
-      --field-label: 10ch;
-    }
-    .doc-header { flex-direction: column; gap: 0.2rem; }
-    .doc-header-right { text-align: left; }
-    .register-row { flex-direction: column; gap: 0.05rem; padding: 0.2rem 0; }
+  @media (max-width: 700px) {
+    :root { --gutter: 1.5rem; }
+
+    .nav { flex-wrap: wrap; gap: 0.5rem; }
+    .nav-links { gap: 1rem; }
+
+    .hero { padding: 3rem 0 2.5rem; }
+    .hero-name { font-size: 1.6rem; letter-spacing: 0.06em; }
+    .hero-lead { font-size: 1.1rem; }
+    .hero-sub { font-size: 0.92rem; }
+    .hero-foot { flex-direction: column; gap: 0.6rem; }
+
+    .highlights { flex-wrap: wrap; gap: 1.25rem; }
+    .highlight { flex: 0 0 40%; }
+
+    .band { padding: 2.5rem var(--gutter); }
+
+    .card-grid { grid-template-columns: 1fr; }
+    .card:last-child { grid-column: auto; }
+
     .evidence-row { flex-direction: column; gap: 0.05rem; }
-    .colophon { flex-direction: column; gap: 0.75rem; }
-    .colophon-right { text-align: left; }
+
+    .event-card { flex-direction: column; gap: 0.75rem; }
+    .event-date-block { text-align: left; }
+
+    .footer-inner { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .footer-right { text-align: left; }
+
     .log-head { flex-wrap: wrap; }
-    .log-series { margin-left: 0; }
-    .section-status { display: none; }
+    .log-series { padding-left: 0; }
   }
 </style>
 </head>
 <body>
 
-<div class="page">
-
-  <!-- ============================================================
-       DOCUMENT HEADER
-       ============================================================ -->
-  <div class="doc-header">
-    <span>Site document · Revision 2 · 2026-03</span>
-    <span class="doc-header-right">provemark.io</span>
-  </div>
-
-  <!-- ============================================================
-       ENTITY
-       ============================================================ -->
-  <div class="entity">
-    <div class="entity-name">Invariant Labs</div>
-  </div>
-
-  <!-- ============================================================
-       FIELD REGISTER — the preamble as governed metadata
-       ============================================================ -->
-  <div class="register">
-    <div class="register-row">
-      <span class="register-label">Scope</span>
-      <span class="register-value">Deterministic verification infrastructure for software supply chains.</span>
-    </div>
-    <div class="register-row">
-      <span class="register-label">Domain</span>
-      <span class="register-value">IEEE 754 floating-point formatting, JSON canonicalization (RFC 8785), deterministic build verification.</span>
-    </div>
-    <div class="register-row">
-      <span class="register-label">For</span>
-      <span class="register-value">Release gating · Supply chain assurance · Regulated artifact production · Critical infrastructure qualification.</span>
-    </div>
-    <div class="register-row">
-      <span class="register-label">Outcome</span>
-      <span class="register-value">Gate releases on governed evidence. Prove exact artifact behavior across explicit replay matrices. Eliminate ambiguity in high-assurance supply-chain workflows.</span>
-    </div>
-    <div class="register-row">
-      <span class="register-label">Invariant</span>
-      <span class="register-value declared">Same inputs + same tool identity = byte-identical governed output.</span>
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<div class="hero-band">
+  <div class="hero-inner">
+    <nav class="nav">
+      <span class="nav-brand">provemark.io</span>
+      <div class="nav-links">
+        <a href="#evidence">Evidence</a>
+        <a href="#infrastructure">Infrastructure</a>
+        <a href="#research">Research</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+    <div class="hero">
+      <h1 class="hero-name">Invariant Labs</h1>
+      <div class="hero-lead">
+        Deterministic verification infrastructure
+        for software supply chains.
+      </div>
+      <div class="hero-sub">
+        Conformance tooling, evidence systems, and foundational security
+        primitives — for release gating, supply chain assurance, and
+        regulated artifact production.
+      </div>
+      <div class="hero-foot">
+        <div class="hero-invariant">Same inputs + same tool identity = byte-identical governed output.</div>
+        <div class="hero-email"><a href="mailto:mark@provemark.io">mark@provemark.io</a></div>
+      </div>
     </div>
   </div>
+</div>
 
-  <!-- ============================================================
-       TIER 1 — THESIS + PROOF METHOD
-       ============================================================ -->
-
-  <!-- 01 — SCOPE -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-index">01</span>
-      <span class="section-title">Scope</span>
-      <span class="section-status">Declared</span>
+<!-- ============================================================
+     HIGHLIGHTS
+     ============================================================ -->
+<div class="highlights-band">
+  <div class="highlights">
+    <div class="highlight">
+      <div class="highlight-num">286,362</div>
+      <div class="highlight-text">Oracle test vectors</div>
     </div>
+    <div class="highlight">
+      <div class="highlight-num">12</div>
+      <div class="highlight-text">Replay nodes</div>
+    </div>
+    <div class="highlight">
+      <div class="highlight-num">60</div>
+      <div class="highlight-text">Executions per release</div>
+    </div>
+    <div class="highlight">
+      <div class="highlight-num">0</div>
+      <div class="highlight-text">Dependencies</div>
+    </div>
+  </div>
+</div>
 
+<!-- ============================================================
+     SCOPE
+     ============================================================ -->
+<div class="band band--white">
+  <div class="band-inner">
+    <div class="section-label">Scope</div>
     <p class="prose">
       Invariant Labs builds infrastructure where <strong>correctness is the product</strong>.
       We develop deterministic data processing libraries, standards-grade conformance tooling,
@@ -570,15 +702,14 @@
       bundles provide proof. We do not ship on confidence alone.
     </p>
   </div>
+</div>
 
-  <!-- 02 — FAILURE CLASS -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-index">02</span>
-      <span class="section-title">Failure Class</span>
-      <span class="section-status">Assurance problem</span>
-    </div>
-
+<!-- ============================================================
+     THE ASSURANCE PROBLEM
+     ============================================================ -->
+<div class="band band--gray">
+  <div class="band-inner">
+    <div class="section-label">The Assurance Problem</div>
     <p class="prose">
       Software supply chains fail silently when foundational primitives produce inconsistent
       output. A JSON serializer that formats the same floating-point value differently across
@@ -597,15 +728,14 @@
       of correctness. Proof of it — scoped, bounded, and independently verifiable.
     </p>
   </div>
+</div>
 
-  <!-- 03 — CONFORMANCE EVIDENCE -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-index">03</span>
-      <span class="section-title">Conformance Evidence</span>
-      <span class="section-status">Core method</span>
-    </div>
-
+<!-- ============================================================
+     CONFORMANCE EVIDENCE
+     ============================================================ -->
+<div class="band band--white" id="evidence">
+  <div class="band-inner">
+    <div class="section-label">Conformance Evidence</div>
     <p class="prose">
       Releases are gated on offline replay evidence — not test passage alone.
       A replay harness executes canonical operations across distributions and
@@ -615,7 +745,7 @@
     </p>
 
     <div class="evidence">
-      <div class="evidence-header">Replay matrix specification</div>
+      <div class="evidence-title">Replay matrix</div>
       <div class="evidence-body">
         <div class="evidence-row">
           <span class="evidence-label">Method</span>
@@ -647,67 +777,60 @@
       between engineering evidence and overclaiming is the boundary we govern.
     </p>
   </div>
+</div>
 
-  <!-- ============================================================
-       TIER 2 — CURRENT FOUNDATION
-       ============================================================ -->
-  <div class="tier">
-    <div class="tier-label">Current Foundation</div>
-  </div>
+<!-- ============================================================
+     INFRASTRUCTURE
+     ============================================================ -->
+<div class="band band--gray" id="infrastructure">
+  <div class="band-inner">
+    <div class="section-label">Infrastructure — Available Now</div>
 
-  <!-- 04 — INFRASTRUCTURE -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-index">04</span>
-      <span class="section-title">Infrastructure</span>
-      <span class="section-status">Available</span>
+    <div class="card-grid">
+      <a class="card" href="https://github.com/lattice-substrate/json-canon">
+        <div class="card-name">json-canon</div>
+        <div class="card-meta">Go · Apache 2.0</div>
+        <div class="card-desc">
+          Deterministic RFC 8785 JSON Canonicalization Scheme. Strict RFC 8259 parser
+          rejecting lone surrogates, duplicate keys, and noncharacters. ECMA-262
+          number formatting with even-digit tie-breaking. UTF-16 code-unit key sorting.
+          Thirteen-class failure taxonomy with stable exit codes. Seven independent resource
+          bounds. Zero dependencies. 286,362 cross-engine oracle test vectors.
+        </div>
+      </a>
+
+      <a class="card" href="https://github.com/lattice-substrate/jcs-schubfach">
+        <div class="card-name">jcs-schubfach</div>
+        <div class="card-meta">Go · Apache 2.0</div>
+        <div class="card-desc">
+          Fixed-width Schubfach digit generation for RFC 8785 number formatting.
+          Same ECMA-262 conformance contract, same output bytes, no multiprecision
+          arithmetic. 31.3% geometric mean throughput improvement over Burger-Dybvig
+          with zero conformance regressions.
+        </div>
+      </a>
+
+      <a class="card" href="https://github.com/lattice-substrate">
+        <div class="card-name">Lattice Substrate</div>
+        <div class="card-meta">GitHub · 11 repositories</div>
+        <div class="card-desc">
+          Organization home for deterministic infrastructure primitives.
+          Four digit-generation algorithms across two languages (Go, Rust),
+          benchmark laboratory, conformance harness, and research artifacts.
+        </div>
+      </a>
     </div>
-    <div class="section-desc">Foundational primitives — released and maintained</div>
-
-    <a class="artifact" href="https://github.com/lattice-substrate/json-canon">
-      <div class="artifact-name">json-canon</div>
-      <div class="artifact-meta">Go · Apache 2.0 · github.com/lattice-substrate/json-canon</div>
-      <div class="artifact-desc">
-        Deterministic RFC 8785 JSON Canonicalization Scheme. Strict RFC 8259 parser
-        rejecting lone surrogates, duplicate keys, and noncharacters. ECMA-262
-        number formatting with even-digit tie-breaking. UTF-16 code-unit key sorting.
-        Thirteen-class failure taxonomy with stable exit codes. Seven independent resource
-        bounds. Zero dependencies. 286,362 cross-engine oracle test vectors.
-      </div>
-    </a>
-
-    <a class="artifact" href="https://github.com/lattice-substrate/jcs-schubfach">
-      <div class="artifact-name">jcs-schubfach</div>
-      <div class="artifact-meta">Go · Apache 2.0 · github.com/lattice-substrate/jcs-schubfach</div>
-      <div class="artifact-desc">
-        Fixed-width Schubfach digit generation for RFC 8785 number formatting.
-        Same ECMA-262 conformance contract, same output bytes, no multiprecision
-        arithmetic. 31.3% geometric mean throughput improvement over Burger-Dybvig
-        with zero conformance regressions.
-      </div>
-    </a>
-
-    <a class="artifact" href="https://github.com/lattice-substrate">
-      <div class="artifact-name">Lattice Substrate</div>
-      <div class="artifact-meta">GitHub · github.com/lattice-substrate · 11 repositories</div>
-      <div class="artifact-desc">
-        Organization home for deterministic infrastructure primitives.
-        Four digit-generation algorithms across two languages (Go, Rust),
-        benchmark laboratory, conformance harness, and research artifacts.
-      </div>
-    </a>
   </div>
+</div>
 
-  <!-- 05 — ENGINEERING -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-index">05</span>
-      <span class="section-title">Engineering</span>
-      <span class="section-status">Doctrine</span>
-    </div>
-    <div class="section-desc">Implementation notes and methods</div>
+<!-- ============================================================
+     ENGINEERING
+     ============================================================ -->
+<div class="band band--white">
+  <div class="band-inner">
+    <div class="section-label">Engineering</div>
 
-    <a class="log" href="https://lattice-substrate.github.io/blog/2026/02/27/shortest-roundtrip-ieee754-burger-dybvig/">
+    <a class="log-entry" href="https://lattice-substrate.github.io/blog/2026/02/27/shortest-roundtrip-ieee754-burger-dybvig/">
       <div class="log-head">
         <span class="log-date">2026-02-27</span>
         <span class="log-dur">28 min</span>
@@ -716,7 +839,7 @@
       <div class="log-series">Part 1 of 4 · Building a JSON Canonicalization Primitive in Go</div>
     </a>
 
-    <a class="log" href="https://lattice-substrate.github.io/blog/2026/02/26/strict-rfc8259-json-parser/">
+    <a class="log-entry" href="https://lattice-substrate.github.io/blog/2026/02/26/strict-rfc8259-json-parser/">
       <div class="log-head">
         <span class="log-date">2026-02-26</span>
         <span class="log-dur">24 min</span>
@@ -725,7 +848,7 @@
       <div class="log-series">Part 2 of 4</div>
     </a>
 
-    <a class="log" href="https://lattice-substrate.github.io/blog/2026/02/25/small-decisions-infrastructure-primitive/">
+    <a class="log-entry" href="https://lattice-substrate.github.io/blog/2026/02/25/small-decisions-infrastructure-primitive/">
       <div class="log-head">
         <span class="log-date">2026-02-25</span>
         <span class="log-dur">19 min</span>
@@ -734,7 +857,7 @@
       <div class="log-series">Part 3 of 4</div>
     </a>
 
-    <a class="log" href="https://lattice-substrate.github.io/blog/2026/02/24/proving-determinism-evidence-release/">
+    <a class="log-entry" href="https://lattice-substrate.github.io/blog/2026/02/24/proving-determinism-evidence-release/">
       <div class="log-head">
         <span class="log-date">2026-02-24</span>
         <span class="log-dur">20 min</span>
@@ -743,7 +866,7 @@
       <div class="log-series">Part 4 of 4</div>
     </a>
 
-    <a class="log" href="https://lattice-substrate.github.io/blog/2026/03/05/multiprecision-to-fixed-width-schubfach/">
+    <a class="log-entry" href="https://lattice-substrate.github.io/blog/2026/03/05/multiprecision-to-fixed-width-schubfach/">
       <div class="log-head">
         <span class="log-date">2026-03-05</span>
         <span class="log-dur">18 min</span>
@@ -751,7 +874,7 @@
       </div>
     </a>
 
-    <a class="log" href="https://lattice-substrate.github.io/blog/2026/03/04/fma-go-floating-point-determinism/">
+    <a class="log-entry" href="https://lattice-substrate.github.io/blog/2026/03/04/fma-go-floating-point-determinism/">
       <div class="log-head">
         <span class="log-date">2026-03-04</span>
         <span class="log-dur">11 min</span>
@@ -759,22 +882,14 @@
       </div>
     </a>
   </div>
+</div>
 
-  <!-- ============================================================
-       TIER 3 — RESEARCH BASIS
-       ============================================================ -->
-  <div class="tier">
-    <div class="tier-label">Research Basis</div>
-  </div>
-
-  <!-- 06 — RESEARCH -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-index">06</span>
-      <span class="section-title">Research</span>
-      <span class="section-status">Under review</span>
-    </div>
-    <div class="section-desc">Empirical basis for evidence-bearing release engineering</div>
+<!-- ============================================================
+     RESEARCH
+     ============================================================ -->
+<div class="band band--gray" id="research">
+  <div class="band-inner">
+    <div class="section-label">Research</div>
 
     <div class="pub-title">
       Fixed-Width vs. Multiprecision Digit Generation for JSON Canonicalization:
@@ -783,7 +898,7 @@
     <div class="pub-status">Under peer review — Software: Practice and Experience (Wiley)</div>
 
     <div class="evidence">
-      <div class="evidence-header">Study parameters</div>
+      <div class="evidence-title">Study parameters</div>
       <div class="evidence-body">
         <div class="evidence-row">
           <span class="evidence-label">Design</span>
@@ -815,54 +930,57 @@
       json-canon's validation methodology and replay evidence gates.
     </p>
   </div>
-
-  <!-- ============================================================
-       TIER 4 — ENGAGEMENT
-       ============================================================ -->
-  <div class="tier">
-    <div class="tier-label">Engagement</div>
-  </div>
-
-  <!-- 07 — CONTACT -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-index">07</span>
-      <span class="section-title">Contact</span>
-    </div>
-
-    <div class="contact-row">
-      <a href="mailto:mark@provemark.io">mark@provemark.io</a>
-    </div>
-    <div class="contact-row" style="margin-top: 0.3rem;">
-      Mark Lenhardt · Founder, Principal Engineer
-    </div>
-    <div class="contact-categories">
-      Open to inquiries on: infrastructure design, conformance consulting,<br>
-      evidence methodology, regulated evaluation pilots, technical partnerships.
-    </div>
-
-    <div class="contact-event">
-      <strong>IIW 42</strong> — Internet Identity Workshop ·
-      April 28–30, 2026 · Mountain View, CA<br>
-      Presenting on JCS number formatting conformance.
-    </div>
-  </div>
-
-  <!-- ============================================================
-       COLOPHON — terminal boundary
-       ============================================================ -->
-  <div class="colophon">
-    <div>
-      <div class="colophon-entity">Invariant Labs</div>
-      <div class="colophon-legal">Limited Liability Company<br>Plymouth, Minnesota</div>
-    </div>
-    <div class="colophon-right">
-      <div class="colophon-version">v2 · 2026-03</div>
-      <div class="colophon-domain">provemark.io</div>
-    </div>
-  </div>
-
 </div>
+
+<!-- ============================================================
+     CONTACT
+     ============================================================ -->
+<div class="band band--white" id="contact">
+  <div class="band-inner">
+    <div class="section-label">Contact</div>
+
+    <div class="contact-card">
+      <div class="contact-email">
+        <a href="mailto:mark@provemark.io">mark@provemark.io</a>
+      </div>
+      <div class="contact-name">
+        Mark Lenhardt · Founder, Principal Engineer
+      </div>
+      <div class="contact-categories">
+        Open to inquiries on: infrastructure design, conformance consulting,
+        evidence methodology, regulated evaluation pilots, technical partnerships.
+      </div>
+    </div>
+
+    <div class="event-card">
+      <div class="event-date-block">
+        <div class="event-month">Apr</div>
+        <div class="event-day">28</div>
+      </div>
+      <div class="event-body">
+        <div class="event-name">IIW 42 — Internet Identity Workshop</div>
+        <div class="event-details">April 28–30, 2026 · Mountain View, CA</div>
+        <div class="event-topic">Presenting on JCS number formatting conformance.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-entity">Invariant Labs</div>
+      <div class="footer-legal">Limited Liability Company<br>Plymouth, Minnesota</div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-version">2026</div>
+      <div class="footer-domain">provemark.io</div>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>
